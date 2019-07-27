@@ -1,12 +1,15 @@
 <template>
 	<div>
-		<el-form v-model="applyForm" ref="applyForm" label-width="95px">
-			<el-form-item label="活动名称">
-				<el-input v-model="applyForm.actname" class="apy-input-normal"></el-input>
+		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm" label-width="95px">
+			<el-form-item label="活动名称" prop="actname">
+				<el-input v-model="baseForm.actname" class="apy-input-normal"></el-input>
 			</el-form-item>
-			<el-form-item label="活动地点">
-				<el-input v-model="applyForm.actaddr" class="apy-input-normal"></el-input>
+			<el-form-item label="活动地点" prop="actaddr">
+				<el-input v-model="baseForm.actaddr" class="apy-input-normal"></el-input>
 			</el-form-item>
+		</el-form>
+
+		<el-form v-model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
 			<el-form-item label="活动时间">
 				<el-date-picker v-model="applyForm.acttime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
@@ -34,37 +37,45 @@
 <script>
 
 export default {
-
+	props: ['base'],
 	data () {
 		return {
+			baseForm: this.base,
 			applyForm: {
-				actname: '',
-				actaddr: '',
 				acttime: '',
 				tiktype: '',
 				tikscore: '',
 				others: ''
-			}
+			},
+			rules: {},
+			baseFormRules: {},
 		};
 	},
 	methods: {
 		getSubmitForm () {
-			var getValid = null;
-			this.$refs.applyForm.validate((valid) => {
-				getValid = valid;
+			var baseVaild = null,
+				applyVaild = null;
+			this.$refs.baseForm.validate((valid) => {
+				baseVaild = valid;
 			});
-			if (getValid) {
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (baseVaild && applyVaild) {
 				return {
 					type: 'ticket',
-					actname: this.applyForm.actname,
-					actaddr: this.applyForm.actaddr,
+					actname: this.baseForm.actname,
+					actaddr: this.baseForm.actaddr,
 					acttime: this.applyForm.acttime,
 					tiktype: this.applyForm.tiktype,
 					tikscore: this.applyForm.tikscore,
 					others: this.applyForm.others
 				};
 			}
-			return null;
+			else{
+				this.$message.error("请正确输入讲座票申请表");
+				return null;
+			}
 		},
 		getPreviewForm () {
 			var previewObj = {
@@ -83,9 +94,16 @@ export default {
 			};
 			return previewObj;
 		},
-		clear () {
+		clear (){
+			this.clearBaseForm();
+			this.clearApplyForm();
+		},
+		clearApplyForm () {
 			this.$refs['applyForm'].resetFields();
-		}
+		},
+		clearBaseForm (){
+			this.$refs['baseForm'].resetFields();
+		},
 	}
 };
 </script>

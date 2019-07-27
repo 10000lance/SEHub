@@ -1,32 +1,37 @@
 /*
 
-  默认的一些参数和样式
+	默认的一些参数和样式
 
 */
+//设置html和body为整屏，这样才不会打乱elementUI的message的垂直间距
+html
+	height 100%
 
+body
+	height 100%
 
 border-radius(n)
-  -webkit-border-radius n
-  -moz-border-radius n
-  border-radius n
+	-webkit-border-radius n
+	-moz-border-radius n
+	border-radius n
 
 // 默认的边框样式
 border-box()
-  border solid 1px #DCDFE6
-  border-radius(10px)
+	border solid 1px #DCDFE6
+	border-radius(10px)
 
 // 不可选中
 not-select()
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 
 // 选项框hover时的默认样式
 hover-box()
-  background: #f5f5f5;
-  -webkit-transition: background 200ms;
-  transition: background 200ms;
+	background: #f5f5f5;
+	-webkit-transition: background 200ms;
+	transition: background 200ms;
 
 
 // 常量定义
@@ -43,62 +48,62 @@ $color_black = #202124
 
 // 旋转的钟动画
 def-animation-clock()
-  @-moz-keyframes hrhand{
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  @-ms-keyframes hrhand{
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  @-webkit-keyframes hrhand{
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  @keyframes hrhand {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  .clock {
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    box-shadow: inset 0px 0px 0px 2px $color_default;
-    border-radius: 50%;
-    position: relative;
-    // margin: 38px auto;
-  }
-  .clock:before {
-    width: 10px;
-    height: 2px;
-    top: 14px;
-    left: 14px;
-    -webkit-transform-origin: 1px 1px;
-    -moz-transform-origin: 1px 1px;
-    transform-origin: 1px 1px;
-    -webkit-animation: hrhand 8s linear infinite;
-    -moz-animation: hrhand 8s linear infinite;
-    animation: hrhand 8s linear infinite;
-    background-color: $color_theme;
-  }
+	@-moz-keyframes hrhand{
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	@-ms-keyframes hrhand{
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	@-webkit-keyframes hrhand{
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	@keyframes hrhand {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	.clock {
+		width: 30px;
+		height: 30px;
+		background-color: transparent;
+		box-shadow: inset 0px 0px 0px 2px $color_default;
+		border-radius: 50%;
+		position: relative;
+		// margin: 38px auto;
+	}
+	.clock:before {
+		width: 10px;
+		height: 2px;
+		top: 14px;
+		left: 14px;
+		-webkit-transform-origin: 1px 1px;
+		-moz-transform-origin: 1px 1px;
+		transform-origin: 1px 1px;
+		-webkit-animation: hrhand 8s linear infinite;
+		-moz-animation: hrhand 8s linear infinite;
+		animation: hrhand 8s linear infinite;
+		background-color: $color_theme;
+	}
 
-  .clock:after {
-    width: 13px;
-    height: 2px;
-    top: 14px;
-    left: 14px;
-    -webkit-transform-origin: 1px 1px;
-    -moz-transform-origin: 1px 1px;
-    transform-origin: 1px 1px;
-    -webkit-animation: hrhand 2s linear infinite;
-    -moz-animation: hrhand 2s linear infinite;
-    animation: hrhand 2s linear infinite;
-    background-color: $color_theme;
-  }
+	.clock:after {
+		width: 13px;
+		height: 2px;
+		top: 14px;
+		left: 14px;
+		-webkit-transform-origin: 1px 1px;
+		-moz-transform-origin: 1px 1px;
+		transform-origin: 1px 1px;
+		-webkit-animation: hrhand 2s linear infinite;
+		-moz-animation: hrhand 2s linear infinite;
+		animation: hrhand 2s linear infinite;
+		background-color: $color_theme;
+	}
 
-  .clock:before, .clock:after {
-    position: absolute;
-    content: '';
-  }
+	.clock:before, .clock:after {
+		position: absolute;
+		content: '';
+	}
 
 

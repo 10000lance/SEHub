@@ -1,5 +1,14 @@
 <template>
 	<div>
+		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm" label-width="95px">
+			<el-form-item label="活动名称" prop="actname">
+				<el-input v-model="baseForm.actname" class="apy-input-normal"></el-input>
+			</el-form-item>
+			<el-form-item label="活动地点" prop="actaddr">
+				<el-input v-model="baseForm.actaddr" class="apy-input-normal"></el-input>
+			</el-form-item>
+		</el-form>
+
 		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
 			<el-form-item label="活动背景" prop="actback">
 				<el-input
@@ -24,12 +33,6 @@
 			</el-form-item>
 			<el-form-item label="承办单位" prop="organizer">
 				<el-input v-model="applyForm.organizer" class="apy-input-normal"></el-input>
-			</el-form-item>
-			<el-form-item label="活动名称" prop="actname">
-				<el-input v-model="applyForm.actname" class="apy-input-normal"></el-input>
-			</el-form-item>
-			<el-form-item label="活动地点" prop="actaddr">
-				<el-input v-model="applyForm.actaddr" class="apy-input-normal"></el-input>
 			</el-form-item>
 			<el-form-item label="面向对象" prop="target">
 				<el-input v-model="applyForm.target" class="apy-input-normal"></el-input>
@@ -73,11 +76,12 @@
 
 <script>
 export default {
+	name : 'activityTable',
+	props: ['base'],
 	data () {
 		return {
+			baseForm: this.base,
 			applyForm: {
-				actname: '',
-				actaddr: '',
 				acttime: '',
 				acttime_more: '',
 				acttime_s: '',
@@ -87,11 +91,9 @@ export default {
 				actintro: '',
 				hostunit: '华南理工大学软件学院',
 				organizer: '',
-				target: ''
+				target: '',
 			},
 			rules: {
-				actname: [{ required: true, message: '请输入活动名称' }],
-				actaddr: [{ required: true, message: '请选择活动区域' }],
 				acttime_s: [{ required: true, message: '请选择活动开始时间' }],
 				acttime_e: [{ required: true, message: '请选择活动结束时间' }],
 				actback: [{ required: true, message: '请输入活动背景' }],
@@ -100,21 +102,29 @@ export default {
 				hostunit: [{ required: true, message: '请输入活动主办单位' }],
 				actintro: [{ required: true, message: '请输入活动简介' }],
 				organizer: [{ required: true, message: '请输入活动承办单位' }]
-			}
+			},
+			baseFormRules: {
+				actname: [{ required: true, message: '请输入活动名称' }],
+				actaddr: [{ required: true, message: '请输入活动区域' }]
+			},
 		};
 	},
 	// 每一个Form组件都要重载getSubmitForm和clear方法
 	methods: {
 		getSubmitForm () {
-			var getValid = null;
-			this.$refs.applyForm.validate((valid) => {
-				getValid = valid;
+			var baseVaild = null,
+				applyVaild = null;
+			this.$refs.baseForm.validate((valid) => {
+				baseVaild = valid;
 			});
-			if (getValid) {
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (baseVaild && applyVaild) {
 				return {
 					type: 'activity',
-					actname: this.applyForm.actname,
-					actaddr: this.applyForm.actaddr,
+					actname: this.baseForm.actname,
+					actaddr: this.baseForm.actaddr,
 					// acttime: this.applyForm.acttime + ' ' + this.applyForm.acttime_more,
 					acttime: new Date(this.applyForm.acttime_s),
 					deadline: new Date(this.applyForm.acttime_e),
@@ -126,7 +136,10 @@ export default {
 					target: this.applyForm.target
 				};
 			}
-			return null;
+			else{
+				this.$message.error("请正确填写活动申请表");			
+				return null;
+			}
 		},
 		getPreviewForm () {
 			var previewObj = null;
@@ -149,9 +162,16 @@ export default {
 			});
 			return previewObj;
 		},
-		clear () {
+		clear (){
+			this.clearApplyForm();
+			this.clearBaseForm();
+		},
+		clearApplyForm (){
 			this.$refs['applyForm'].resetFields();
-		}
+		},
+		clearBaseForm (){
+			this.$refs['baseForm'].resetFields();
+		},
 	}
 };
 </script>

@@ -6,6 +6,8 @@ import router from './router';
 import store from './store';
 import './plugins/element.js';
 import SeUpload from './components/apply/SeUpload';
+//导入默认样式
+import './assets/css/default.styl';
 
 Vue.config.productionTip = false;
 
