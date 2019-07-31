@@ -25,37 +25,37 @@ import HeadBar from '../components/index/HeadBar.vue';
 export default {
   components: {
 	'side-bar': SideBar,
-	'head-bar': HeadBar
+	'head-bar': HeadBar,
   },
   data () {
 	return {
-	  paths: [
-		  { // 定义边栏的跳转
-			name: '首页',
-			path: '/home',
-			iclass: 'el-icon-date'
-		  }, 
-		  {
-			name: '部门中心',
-			path: '/center',
-			iclass: 'el-icon-star-off'
-		  }, 
-		  {
-			name: '部门通知',
-			path: '/notice',
-			iclass: 'el-icon-bell'
-		  }, 
-		  {
-			name: '工作申请',
-			path: '/apply',
-			iclass: 'el-icon-document'
-		  }, 
-		  {
-			name: '其他',
-			path: '/others',
-			iclass: 'el-icon-news'
-		  }
-	  ]
+	  	paths: [
+			{ // 定义边栏的跳转
+				name: '首页',
+				path: '/home',
+				iclass: 'el-icon-date'
+			}, 
+			{
+				name: '部门中心',
+				path: '/center',
+				iclass: 'el-icon-star-off'
+			}, 
+			{
+				name: '部门通知',
+				path: '/notice',
+				iclass: 'el-icon-bell'
+			}, 
+			{
+				name: '工作申请',
+				path: '/apply',
+				iclass: 'el-icon-document'
+			}, 
+			{
+				name: '其他',
+				path: '/others',
+				iclass: 'el-icon-news'
+			}
+		]
 	};
   },
   beforeMount () {

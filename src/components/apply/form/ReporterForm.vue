@@ -48,9 +48,9 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				repddl: '',
-				repwork: [],
+				acttime: '2019-10-1',
+				repddl: '2019-10-5',
+				repwork: ['拍照'],
 				repothers: ''
 			},
 			rules: {
@@ -80,9 +80,9 @@ export default {
 					actname: this.baseForm.actname,
 					actaddr: this.baseForm.actaddr,
 					acttime: new Date(this.applyForm.acttime),
-					deadline: new Date(this.applyForm.repddl),
-					work: this.applyForm.repwork.join('；'),
-					others: this.applyForm.repothers
+					repddl: new Date(this.applyForm.repddl),
+					repwork: this.applyForm.repwork.join('；'),
+					reporters: this.applyForm.repothers
 				};
 			}
 			else{

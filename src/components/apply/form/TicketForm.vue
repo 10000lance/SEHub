@@ -9,14 +9,14 @@
 			</el-form-item>
 		</el-form>
 
-		<el-form v-model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="活动时间">
+		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
+			<el-form-item label="活动时间" prop="acttime">
 				<el-date-picker v-model="applyForm.acttime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
-			<el-form-item label="分数类型">
+			<el-form-item label="分数类型" prop="tiktype">
 				<el-input v-model="applyForm.tiktype" class="apy-input-normal"></el-input>
 			</el-form-item>
-			<el-form-item label="分值">
+			<el-form-item label="分值" prop="tikscore">
 				<el-input v-model="applyForm.tikscore" class="apy-input-normal"></el-input>
 			</el-form-item>
 			<el-form-item label="备注">
@@ -42,13 +42,20 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				tiktype: '',
-				tikscore: '',
+				acttime: '2019-10-1',
+				tiktype: '创新分',
+				tikscore: 2,
 				others: ''
 			},
-			rules: {},
-			baseFormRules: {},
+			rules: {
+				acttime: [{ required: true, message: '请选择活动日期' }],
+				tiktype: [{ required: true, message: '请输入讲座票类型' }],
+				tikscore: [{ required: true, message: '请输入申请人数' }, { type: 'number', message: '请输入数字' }],
+			},
+			baseFormRules: {
+				actname: [{ required: true, message: '请输入活动名称' }],
+				actaddr: [{ required: true, message: '请输入活动区域' }],
+			},
 		};
 	},
 	methods: {

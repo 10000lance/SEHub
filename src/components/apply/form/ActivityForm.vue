@@ -76,22 +76,24 @@
 
 <script>
 export default {
-	name : 'activityTable',
-	props: ['base'],
+	// name : 'activityTable',
+	props: [
+		'base',
+	],
 	data () {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				acttime_more: '',
-				acttime_s: '',
-				acttime_e: '',
-				actback: '',
-				actaim: '',
-				actintro: '',
-				hostunit: '华南理工大学软件学院',
-				organizer: '',
-				target: '',
+				// acttime: '',
+				// acttime_more: '',
+				acttime_s: '2019-10-1',		//开始时间
+				acttime_e: '2019-10-11',		//结束时间
+				actback: '软件学院',		//背景
+				actaim: '软件学院软件学院',			//目的
+				actintro: '软件学院软件学院软件学院',		//介绍
+				hostunit: '华南理工大学软件学院',			//主办单位
+				organizer: '软件学院',			//承办单位
+				target: '软件学院全体学生',				//对象
 			},
 			rules: {
 				acttime_s: [{ required: true, message: '请选择活动开始时间' }],
@@ -126,8 +128,8 @@ export default {
 					actname: this.baseForm.actname,
 					actaddr: this.baseForm.actaddr,
 					// acttime: this.applyForm.acttime + ' ' + this.applyForm.acttime_more,
-					acttime: new Date(this.applyForm.acttime_s),
-					deadline: new Date(this.applyForm.acttime_e),
+					acttime_s: new Date(this.applyForm.acttime_s),
+					acttime_e: new Date(this.applyForm.acttime_e),
 					actback: this.applyForm.actback,
 					actaim: this.applyForm.actaim,
 					actintro: this.applyForm.actintro,

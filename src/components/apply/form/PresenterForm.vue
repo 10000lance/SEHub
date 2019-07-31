@@ -43,9 +43,9 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				rehtime: '', // 彩排时间
-				number: '',
+				acttime: '2019-10-1',
+				rehtime: '2019-10-2', // 彩排时间
+				number: 3,
 				others: ''
 			},
 			rules: {

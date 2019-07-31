@@ -48,10 +48,10 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				newddl: '',
-				newwork: [],
-				others: ''
+				acttime: '2019-10-1',		//活动时间
+				newddl: '2019-10-2',			//提交时间
+				newwork: ['推送'],		//申请项目
+				others: ''			//备注
 			},
 			rules: {
 				acttime: [{ required: true, message: '请选择活动日期' }],
@@ -80,8 +80,8 @@ export default {
 					actname: this.baseForm.actname,
 					actaddr: this.baseForm.actaddr,
 					acttime: new Date(this.applyForm.acttime),
-					deadline: this.applyForm.newddl,
-					work: this.applyForm.newwork.join('；'),
+					newddl: this.applyForm.newddl,
+					newwork: this.applyForm.newwork.join('；'),
 					others: this.applyForm.newothers
 				};
 			}

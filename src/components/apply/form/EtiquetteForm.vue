@@ -41,16 +41,16 @@
 </template>
 <script>
 export default {
-	name : 'etiquetteTable',
+	// name : 'etiquetteTable',
 	props: ['base'],
 	data () {	
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				etinum: '',
-				etiwork: [],
-				others: ''
+				acttime: '2019-10-1',		//活动时间
+				etinum: 3,			//申请人数
+				etiwork: ['引导'],		//礼仪工作
+				others: ''			//备注
 			},
 			etirules: {
 				acttime: [{ required: true, message: '请选择活动日期' }],
@@ -79,8 +79,8 @@ export default {
 					actname: this.baseForm.actname,
 					actaddr: this.baseForm.actaddr,
 					acttime: new Date(this.applyForm.acttime),
-					number: this.applyForm.etinum,
-					work: this.applyForm.etiwork.join('；'),
+					etinum: this.applyForm.etinum,
+					etiwork: this.applyForm.etiwork.join('；'),
 					others: this.applyForm.others
 				};
 			}

@@ -1,4 +1,5 @@
 <template>
+<div>
 	<div>
 		<div class="apy-header">{{formTitle}}</div>
 		<div class="apy-container">
@@ -30,7 +31,7 @@
 				<transition name="slide-fade-right">
 					<keep-alive>
 						<component
-							ref="tickForm"
+							ref="ticketForm"
 							:is="otherTables.ticket.table"
 							:base="base"
 							v-show="current === 'ticket'"
@@ -142,10 +143,31 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
+	<!-- <preview :previewObj="previewObj"></preview> -->
+	<el-dialog
+		title="请确认表单"
+		:visible="isPreview"
+		center
+		:appendToBody="true"
+		:closeOnClickModal="false"
+		:showClose="false"
+		width="75%"
+	>
+		<preview :previewData="previewData"></preview>
+
+		<span slot="footer" class="dialog-footer">
+		    <el-button @click="isPreview = false">取 消</el-button>
+		    <el-button ref="applyBtn" type="primary" @click="apply">确 定 提 交</el-button>
+		</span>
+	</el-dialog>
+</div>
 </template>
+
 <script>
 import { apiApplyForm } from '../../api/apply.js';
+import { ToFormName } from '../../assets/js/seconfig.js';
 import EtiquetteTable from '../../components/apply/form/EtiquetteForm.vue';
 import EtiquetteMatter from '../../components/apply/matters/EtiquetteMatter.vue';
 import TicketTable from '../../components/apply/form/TicketForm.vue';
@@ -155,25 +177,18 @@ import PresenterMatter from '../../components/apply/matters/PresenterMatter.vue'
 import PublicityTable from '../../components/apply/form/PublicityForm.vue';
 import PublicityMatter from '../../components/apply/matters/PublicityMatter.vue';
 
-// 默认的申请表单参数
-const DefaultFormConfig = {
-	activity: '活动申请表',
-	etiquette: '礼仪队申请表',
-	material: '秘书物资申请表',
-	newmedia: '新媒体申请表',
-	presenter: '主持人申请表',
-	publicity: '宣传物资申请表',
-	reporter: '记者团申请表',
-	ticket: '讲座票申请表'
-};
-
+console.log(TicketTable);
+import Preview from '../../components/Preview.vue';
 export default {
 	name: 'applyform',
+	components: {
+		'preview': Preview,
+	},
 	data () {
 		return {
 			base: {
-				actname: '',
-				actaddr: '',
+				actname: '软件学院活动',
+				actaddr: 'C10',
 			},
 			origin: this.$route.params.id,
 			current: this.$route.params.id,
@@ -212,6 +227,8 @@ export default {
 					Matter: PublicityMatter,
 				},
 			},
+			isPreview: false,
+			previewData: null,
 		};
 	},
 
@@ -245,10 +262,10 @@ export default {
 		},
 
 		originTitle: function() {
-			return DefaultFormConfig[this.origin];
+			return ToFormName[this.origin];
 		},
 		formTitle: function () {
-			return DefaultFormConfig[this.current];
+			return ToFormName[this.current];
 		},
 		formID: function () {
 			let pathid = this.$route.params.id;
@@ -273,60 +290,101 @@ export default {
 		}
 	},
 	methods: {
-		applySubmit(){
+		//最终提交表单函数，在applySubmit函数中动态生成
+		apply (){
+			this.isPreview = false;
+		},
+		applySubmit (){
+			let form = this.getFormData();
+			if (form){
+				this.preview(form, true);
+				this.apply = () => {
+					this.isPreview = false;
+					apiApplyForm(form, () => {
+						this.clear();
+						this.$message.success('提交成功');
+					});
+				};
+			}
+			else{
+				return ;
+				// this.$message.error('请正确填写表单');
+			}
+			// var t = new Date('2019-04-18 08:00:00')
+			// console.log(t)
+		},
+		//获取表单数据
+		getFormData (){
 			if (!this.formTitle){
-				return;
+				return null;
 			}
 			var form = this.$refs['apyForm'].getSubmitForm();
 			if (!form){
-				return;
+				return null;
 			}
-			console.log(form);
+			// console.log(form);
 
 			if (this.isActivity){
 				var otherTables = [];
-				['etiquette', 'ticket', 'presenter', 'publicity'].forEach((value) => {
-					let formName = value + 'Form',
+				// results = ['etiquette', 'ticket', 'presenter', 'publicity'].forEach((value) =>{
+				// 		let formName = value + 'Form',
+				// 			otherForm = null;
+				// 		if (!this.otherTables[value].has){
+				// 			return;
+				// 		}
+				// 		otherForm = this.$refs[formName].getSubmitForm();
+				// 		if (otherForm){
+				// 			otherTables.push(otherForm);
+				// 			return 1;
+				// 		}
+				// 		else {
+				// 			return 0;
+				// 		}
+				// 	});
+				for (let name of ['etiquette', 'ticket', 'presenter', 'publicity']){
+					let formName = name + 'Form',
 						otherForm = null;
-					if (!this.otherTables[value].has){
-						return;
+					if (!this.otherTables[name].has){
+						continue;
 					}
 					otherForm = this.$refs[formName].getSubmitForm();
 					if (otherForm){
 						otherTables.push(otherForm);
 					}
 					else {
-						return;
+						return null;
 					}
-				});
-				form.otherTables = otherTables;
+				}
+				if (otherTables.length > 0){
+					form.otherTables = otherTables;
+				}
 				console.log(form);
-				['etiquette', 'ticket', 'presenter', 'publicity'].forEach((value) => {
-					if (this.otherTables[value].has){
-						let formName = value + "Form";
-						this.$refs[formName].clear();
-					}
-				});
+				// this.clearOthers();
 			}
-
-			if (form){
-				apiApplyForm(form, () => {
-					this.$refs['apyForm'].clear();
-					this.$message.success('提交成功');
-				});
-			}
-			else{
-				this.$message.error('请正确填写表单');
-			}
-			// var t = new Date('2019-04-18 08:00:00')
-			// console.log(t)
+			return form;
 		},
-		toggleTable(tableName){
+		//清空表单
+		clear (){
+			this.$refs['apyForm'].clear();
+			['etiquette', 'ticket', 'presenter', 'publicity'].forEach((value) => {
+				if (this.otherTables[value].has){
+					let formName = value + "Form";
+					this.$refs[formName].clear();
+				}
+			});
+		},
+		//预览表单
+		preview (form, isApply){
+			this.isPreview = true;
+			this.previewData = form;
+		},
+		toggleTable (tableName){
 			if (tableName === 'origin'){
 				this.current = this.origin;
 				return ;
 			}
 			let other = this.otherTables[tableName];
+			console.log(other);
 			if (!other.has){
 				other.matter = other.Matter;
 				other.table = other.Table;
@@ -337,7 +395,7 @@ export default {
 				this.current = other.type;
 			}
 		},
-		deleteTable(tableName){
+		deleteTable (tableName){
 			let other = this.otherTables[tableName];
 			if (other.has){
 				other.matter = null;

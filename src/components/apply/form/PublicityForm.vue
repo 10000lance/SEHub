@@ -22,11 +22,11 @@
 					placeholder="预计完成时间"
 				></el-date-picker>
 			</el-form-item>
-			<el-form-item label="活动简介" prop="pubintro">
+			<el-form-item label="活动简介" prop="actintro">
 				<el-input
 					type="textarea"
 					rows="5"
-					v-model="applyForm.pubintro"
+					v-model="applyForm.actintro"
 					resize="none"
 					class="apy-text-normal"
 				></el-input>
@@ -90,21 +90,21 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				acttime: '',
-				dlytime: '', // 预计交付时间
-				pubintro: '',
+				acttime: '2019-10-1',
+				dlytime: '2019-10-5', // 预计交付时间
+				actintro: '软件学院宣传部',
 				pubneeds: [{
-					name: '',
-					size: '',
-					num: ''
+					// name: '',
+					// size: '',
+					// num: ''
 				}],
-				pubcontent: '',
+				pubcontent: '软件学院宣传部',
 				pubothers: ''
 			},
 			rules: {
 				acttime: [{ required: true, message: '请选择活动日期' }],
 				dlytime: [{ required: true, message: '请选择预计交付时间' }],
-				pubintro: [{ required: true, message: '请输入活动简介' }],
+				actintro: [{ required: true, message: '请输入活动简介' }],
 				pubneeds: [{ required: true }],
 				pubcontent: [{ required: true, message: '请输入文字内容' }]
 			},
@@ -145,11 +145,11 @@ export default {
 					actname: this.baseForm.actname,
 					actaddr: this.baseForm.actaddr,
 					acttime: new Date(this.applyForm.acttime),
-					deadline: new Date(this.applyForm.dlytime),
-					actintro: this.applyForm.pubintro,
-					needs: needs,
-					content: this.applyForm.pubcontent,
-					others: this.applyForm.pubothers
+					dlytime: new Date(this.applyForm.dlytime),
+					actintro: this.applyForm.actintro,
+					pubneeds: needs,
+					pubcontent: this.applyForm.pubcontent,
+					pubothers: this.applyForm.pubothers
 				};
 			}
 			else{
@@ -170,7 +170,7 @@ export default {
 							actaddr: this.applyForm.actaddr,
 							acttime: this.applyForm.acttime,
 							dlytime: this.applyForm.dlytime,
-							pubintro: this.applyForm.pubintro,
+							actintro: this.applyForm.actintro,
 							pubneeds: '',
 							pubcontent: this.applyForm.pubcontent,
 							pubothers: this.applyForm.pubothers

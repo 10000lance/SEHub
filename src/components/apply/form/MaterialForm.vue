@@ -66,13 +66,13 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				lendtime: '',
-				backtime: '',
-				needs: [{
-					name: '',
-					num: ''
+				lendtime: '2019-10-1',		//借用时间
+				backtime: '2019-10-2',		//归还时间
+				needs: [{			//物资清单
+					// name: '',
+					// num: ''
 				}],
-				others: ''
+				others: ''			//备注
 			},
 			rules: {
 				lendtime: [{ required: true, message: '请选择借用时间' }],
@@ -83,7 +83,7 @@ export default {
 				actname: [{ required: true, message: '请输入活动名称' }],
 				actaddr: [{ required: true, message: '请输入活动区域' }],
 			},
-		}
+		};
 	},
 	methods: {
 		addApyNeeds () {
