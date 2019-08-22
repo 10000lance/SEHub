@@ -80,7 +80,7 @@ export function apiLogin (callback) {
 	let password = '123456';
 	let q = 'username=' + username + '&password=' + password;
 	// let yes = 'yes'
-	axios.post('/api/login', q).then(res => callback(res.data))
+	axios.post('/api/login', q).then(res => callback(res))
 		.catch(error => {
 			console.log(error);
 		});
@@ -88,5 +88,8 @@ export function apiLogin (callback) {
 
 // 首页获取所有活动
 export function apiGetActivities (callback) {
-	callback(homeData);
+	axios.get('/application/activity').then(res => callback(res))
+		.catch(error => {
+			console.log(error);
+		});
 }

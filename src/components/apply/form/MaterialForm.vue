@@ -2,21 +2,58 @@
 <template>
 	<div>
 		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm" label-width="95px">
-			<el-form-item label="活动名称" prop="actname">
-				<el-input v-model="baseForm.actname" class="apy-input-normal"></el-input>
+			<el-form-item label="活动名称" prop="name">
+				<el-input v-model="baseForm.name" class="apy-input-normal"></el-input>
 			</el-form-item>
-			<el-form-item label="活动地点" prop="actaddr">
-				<el-input v-model="baseForm.actaddr" class="apy-input-normal"></el-input>
+
+			<el-form-item label="活动地点" prop="address">
+				<el-input v-model="baseForm.address" class="apy-input-normal"></el-input>
 			</el-form-item>
+
+			<el-form-item label="开始时间" prop="startTime">
+				<el-date-picker
+					v-model="baseForm.startTime"
+					type="datetime"
+					placeholder="活动开始日期"
+					value-format="yyyy-MM-dd"
+				></el-date-picker>
+				<!-- <el-row>
+					<el-date-picker v-model="applyForm.acttime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+					<span>&emsp;时间段&emsp;</span>
+					<el-input v-model="applyForm.acttime_more" class="apy-input-mini"></el-input>
+				</el-row>-->
+			</el-form-item>
+
+			<el-form-item label="结束时间" prop="endTime">
+				<el-date-picker
+					v-model="baseForm.endTime"
+					type="datetime"
+					placeholder="活动结束日期"
+					value-format="yyyy-MM-dd"
+				></el-date-picker>
+			</el-form-item>
+
+			<el-form-item label="活动简介" prop="description">
+				<el-input
+					type="textarea"
+					rows="5"
+					v-model="baseForm.description"
+					resize="none"
+					class="apy-text-normal"
+				></el-input>
+			</el-form-item>
+
 		</el-form>
 
 		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="借用时间" prop="lendtime">
-				<el-date-picker v-model="applyForm.lendtime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+			<el-form-item label="借用时间" prop="lendTime">
+				<el-date-picker v-model="applyForm.lendTime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
-			<el-form-item label="归还时间" prop="backtime">
-				<el-date-picker v-model="applyForm.backtime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+
+			<el-form-item label="归还时间" prop="backTime">
+				<el-date-picker v-model="applyForm.backTime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
+
 			<div class="apy-form-dashed"></div>
 			<el-form-item
 				prop="needs"
@@ -37,6 +74,7 @@
 					@click="delApyNeeds(index)"
 				></el-button>
 			</el-form-item>
+
 			<el-button class="apy-pub-form-btn" type="primary" plain @click="addApyNeeds">
 				添加物资需求
 				<i class="el-icon-circle-plus-outline"></i>
@@ -47,7 +85,7 @@
 				<el-input
 					type="textarea"
 					rows="5"
-					v-model="applyForm.others"
+					v-model="applyForm.note"
 					resize="none"
 					class="apy-text-normal"
 				></el-input>
@@ -66,22 +104,25 @@ export default {
 		return {
 			baseForm: this.base,
 			applyForm: {
-				lendtime: '2019-10-1',		//借用时间
-				backtime: '2019-10-2',		//归还时间
+				lendTime: '2019-10-1',		//借用时间
+				backTime: '2019-10-2',		//归还时间
 				needs: [{			//物资清单
 					// name: '',
 					// num: ''
 				}],
-				others: ''			//备注
+				note: ''			//备注
 			},
 			rules: {
-				lendtime: [{ required: true, message: '请选择借用时间' }],
-				backtime: [{ required: true, message: '请选择归还时间' }],
+				lendTime: [{ required: true, message: '请选择借用时间' }],
+				backTime: [{ required: true, message: '请选择归还时间' }],
 				needs: [{ required: true }]
 			},
 			baseFormRules: {
-				actname: [{ required: true, message: '请输入活动名称' }],
-				actaddr: [{ required: true, message: '请输入活动区域' }],
+				name: [{ required: true, message: '请输入活动名称' }],
+				address: [{ required: true, message: '请输入活动区域' }],
+				startTime: [{ required: true, message: '请选择活动开始时间' }],
+				endTime: [{ required: true, message: '请选择活动结束时间' }],
+				description: [{ required: true, message: '请输入活动简介' }],
 			},
 		};
 	},
@@ -112,13 +153,10 @@ export default {
 					}
 				}
 				return {
-					type: 'material',
-					actname: this.baseForm.actname,
-					actaddr: this.baseForm.actaddr,
-					lendtime: new Date(this.applyForm.lendtime),
-					backtime: new Date(this.applyForm.backtime),
+					lendTime: new Date(this.applyForm.lendTime),
+					backTime: new Date(this.applyForm.backTime),
 					needs: needs,
-					others: this.applyForm.others
+					note: this.applyForm.note
 				};
 			}
 			else{
@@ -126,42 +164,39 @@ export default {
 				return null;
 			}
 		},
-		getPreviewForm () {
-			var previewObj = { title: '秘书物资申请', content: {} };
-			previewObj.content.postname = this.$store.state.user.name;
-			previewObj.content.postdapart = this.$store.state.user.depart;
-			previewObj.content.posttime = new Date().toLocaleString();
-			previewObj.content.actname = this.applyForm.actname;
-			previewObj.content.actaddr = this.applyForm.actaddr;
-			previewObj.content.lendtime = this.applyForm.lendtime;
-			previewObj.content.backtime = this.applyForm.backtime;
-			if (this.applyForm.needs.length === 0) {
-				previewObj.content.needs = '无';
-			} else if (this.applyForm.needs.length === 1) {
-				let val = this.applyForm.needs[0];
-				previewObj.content.needs = val.name + '  数量：' + val.num;
-			} else {
-				previewObj.content.needs = [];
-				for (let i of this.applyForm.needs) {
-				// console.log(i)
-					previewObj.content.needs.push(i.name + '  数量：' + i.num);
-				}
-			}
-			previewObj.content.others = this.applyForm.others;
-			return previewObj;
-		},
-		clear (){
-			this.clearBaseForm();
-			this.clearApplyForm();
-		},
-		clearApplyForm () {
+		// getPreviewForm () {
+		// 	var previewObj = { title: '秘书物资申请', content: {} };
+		// 	previewObj.content.postname = this.$store.state.user.name;
+		// 	previewObj.content.postdapart = this.$store.state.user.depart;
+		// 	previewObj.content.posttime = new Date().toLocaleString();
+		// 	previewObj.content.actname = this.applyForm.actname;
+		// 	previewObj.content.actaddr = this.applyForm.actaddr;
+		// 	previewObj.content.lendtime = this.applyForm.lendtime;
+		// 	previewObj.content.backtime = this.applyForm.backtime;
+		// 	if (this.applyForm.needs.length === 0) {
+		// 		previewObj.content.needs = '无';
+		// 	} else if (this.applyForm.needs.length === 1) {
+		// 		let val = this.applyForm.needs[0];
+		// 		previewObj.content.needs = val.name + '  数量：' + val.num;
+		// 	} else {
+		// 		previewObj.content.needs = [];
+		// 		for (let i of this.applyForm.needs) {
+		// 		// console.log(i)
+		// 			previewObj.content.needs.push(i.name + '  数量：' + i.num);
+		// 		}
+		// 	}
+		// 	previewObj.content.others = this.applyForm.others;
+		// 	return previewObj;
+		// },
+		clear () {
 			this.$refs['applyForm'].resetFields();
 		},
-		clearBaseForm (){
-			this.$refs['baseForm'].resetFields();
+
+		setData (formData){
+			this.applyForm = formData;
 		},
 	}
-}
+};
 </script>
 
 <style scoped lang="stylus" src="../../../assets/css/apply/form.styl"></style>

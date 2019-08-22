@@ -1,35 +1,39 @@
 <template>
-  <div class="index-container">
-	<div class="head-box">
-	  <head-bar></head-bar>
-	</div>
-	<div class="main-box">
-	  <div class="left-box">
-		<side-bar :paths="paths"></side-bar>
-	  </div>
-	  <div class="right-box">
-		<transition name="fade" mode="out-in">
-		  <keep-alive exclude="applyform">
-			<div class="index-right-box">
-			  <router-view></router-view>
+	<div class="index-container">
+		<div class="head-box">
+			<head-bar></head-bar>
+		</div>
+		
+		<div class="main-box">
+			<div class="left-box">
+				<side-bar :paths="paths"></side-bar>
 			</div>
-		  </keep-alive>
-		</transition>
-	  </div>
+
+			<div class="right-box">
+				<transition name="fade" mode="out-in">
+					<keep-alive exclude="applyform">
+					<div class="index-right-box">
+						<router-view></router-view>
+					</div>
+					</keep-alive>
+				</transition>
+			</div>
+		</div>
 	</div>
-  </div>
 </template>
+
 <script>
 import SideBar from '../components/index/SideBar.vue';
 import HeadBar from '../components/index/HeadBar.vue';
+
 export default {
-  components: {
+	components: {
 	'side-bar': SideBar,
 	'head-bar': HeadBar,
-  },
-  data () {
+	},
+	data () {
 	return {
-	  	paths: [
+			paths: [
 			{ // 定义边栏的跳转
 				name: '首页',
 				path: '/home',
@@ -57,16 +61,16 @@ export default {
 			}
 		]
 	};
-  },
-  beforeMount () {
+	},
+	beforeMount () {
 	if (this.$route.path === '/') {
-	  if (this.$store.state.isLogin) {
+		if (this.$store.state.isLogin) {
 		this.$router.push('home');
-	  } else {
+		} else {
 		this.$router.push('login');
-	  }
+		}
 	}
-  }
+	}
 };
 </script>
 

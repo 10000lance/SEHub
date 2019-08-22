@@ -4,8 +4,18 @@
 		<div class="apy-header">{{formTitle}}</div>
 		<div class="apy-container">
 			<div class="apy-form-container">
+				<!-- 基本信息表单 -->
+				<transition name="slide-fade-right">
+					<keep-alive>
+						<baseForm
+							ref="baseForm"
+							:baseForm="base"
+						></baseForm>
+					</keep-alive>
+				</transition>
+
 				<!-- el-form -->
-				<!-- transition必须放在keep-alive才能使keep-alive生效 -->
+				<!-- transition必须放在keep-alive外面才能使keep-alive生效 -->
 				<transition name="slide-fade-right">
 					<keep-alive>
 						<component
@@ -31,10 +41,10 @@
 				<transition name="slide-fade-right">
 					<keep-alive>
 						<component
-							ref="ticketForm"
-							:is="otherTables.ticket.table"
+							ref="lectureTicketForm"
+							:is="otherTables.lectureTicket.table"
 							:base="base"
-							v-show="current === 'ticket'"
+							v-show="current === 'lectureTicket'"
 						></component>
 					</keep-alive>
 				</transition>
@@ -42,10 +52,10 @@
 				<transition name="slide-fade-right">
 					<keep-alive>
 						<component
-							ref="presenterForm"
-							:is="otherTables.presenter.table"
+							ref="hostForm"
+							:is="otherTables.host.table"
 							:base="base"
-							v-show="current === 'presenter'"
+							v-show="current === 'host'"
 						></component>
 					</keep-alive>
 				</transition>
@@ -53,10 +63,10 @@
 				<transition name="slide-fade-right">
 					<keep-alive>
 						<component
-							ref="publicityForm"
-							:is="otherTables.publicity.table"
+							ref="posterForm"
+							:is="otherTables.poster.table"
 							:base="base"
-							v-show="current === 'publicity'"
+							v-show="current === 'poster'"
 						></component>
 					</keep-alive>
 				</transition>
@@ -93,50 +103,50 @@
 						</div>
 					</transition>
 			
-					<el-button :type="ticket_add_btn"  class="add-btn" @click="toggleTable('ticket')">
-						<i class="el-icon-circle-plus-outline" v-if="!otherTables.ticket.has"></i>
-						{{ticketText}}
+					<el-button :type="lectureTicket_add_btn"  class="add-btn" @click="toggleTable('lectureTicket')">
+						<i class="el-icon-circle-plus-outline" v-if="!otherTables.lectureTicket.has"></i>
+						{{lectureTicketText}}
 					</el-button>
 					<transition name="slide-fade-left">
-						<div class="new-matter" v-if="current === 'ticket'">
-							<component :is="otherTables.ticket.matter"></component>
+						<div class="new-matter" v-if="current === 'lectureTicket'">
+							<component :is="otherTables.lectureTicket.matter"></component>
 							<el-button
 								type="danger"
 								class="delete-btn"
-								@click="deleteTable('ticket')"
-								v-if="otherTables.ticket.has"
+								@click="deleteTable('lectureTicket')"
+								v-if="otherTables.lectureTicket.has"
 							>删除讲座票申请表</el-button>
 						</div>
 					</transition>
 			
-					<el-button :type="presenter_add_btn"  class="add-btn" @click="toggleTable('presenter')">
-						<i class="el-icon-circle-plus-outline" v-if="!otherTables.presenter.has"></i>
-						{{presenterText}}
+					<el-button :type="host_add_btn"  class="add-btn" @click="toggleTable('host')">
+						<i class="el-icon-circle-plus-outline" v-if="!otherTables.host.has"></i>
+						{{hostText}}
 					</el-button>
 					<transition name="slide-fade-left">
-						<div class="new-matter" v-if="current === 'presenter'">
-							<component :is="otherTables.presenter.matter"></component>
+						<div class="new-matter" v-if="current === 'host'">
+							<component :is="otherTables.host.matter"></component>
 							<el-button
 								type="danger"
 								class="delete-btn"
-								@click="deleteTable('presenter')"
-								v-if="otherTables.presenter.has"
+								@click="deleteTable('host')"
+								v-if="otherTables.host.has"
 							>删除主持人申请表</el-button>
 						</div>
 					</transition>					
 			
-					<el-button :type="publicity_add_btn" class="add-btn" @click="toggleTable('publicity')">
-						<i class="el-icon-circle-plus-outline" v-if="!otherTables.publicity.has"></i>
-						{{publicityText}}
+					<el-button :type="poster_add_btn" class="add-btn" @click="toggleTable('poster')">
+						<i class="el-icon-circle-plus-outline" v-if="!otherTables.poster.has"></i>
+						{{posterText}}
 					</el-button>
 					<transition name="slide-fade-left">
-						<div class="new-matter" v-if="current === 'publicity'">
-							<component :is="otherTables.publicity.matter"></component>
+						<div class="new-matter" v-if="current === 'poster'">
+							<component :is="otherTables.poster.matter"></component>
 							<el-button
 								type="danger"
 								class="delete-btn"
-								@click="deleteTable('publicity')"
-								v-if="otherTables.publicity.has"
+								@click="deleteTable('poster')"
+								v-if="otherTables.poster.has"
 							>删除宣传物资申请表</el-button>
 						</div>
 					</transition>
@@ -170,26 +180,37 @@ import { apiApplyForm } from '../../api/apply.js';
 import { ToFormName } from '../../assets/js/seconfig.js';
 import EtiquetteTable from '../../components/apply/form/EtiquetteForm.vue';
 import EtiquetteMatter from '../../components/apply/matters/EtiquetteMatter.vue';
-import TicketTable from '../../components/apply/form/TicketForm.vue';
-import TicketMatter from '../../components/apply/matters/TicketMatter.vue';
-import PresenterTable from '../../components/apply/form/PresenterForm.vue';
-import PresenterMatter from '../../components/apply/matters/PresenterMatter.vue';
-import PublicityTable from '../../components/apply/form/PublicityForm.vue';
-import PublicityMatter from '../../components/apply/matters/PublicityMatter.vue';
 
-console.log(TicketTable);
+import LectureTicketTable from '../../components/apply/form/LectureTicketForm.vue';
+import LectureTicketMatter from '../../components/apply/matters/LectureTicketMatter.vue';
+
+import HostTable from '../../components/apply/form/HostForm.vue';
+import HostMatter from '../../components/apply/matters/HostMatter.vue';
+
+import PosterTable from '../../components/apply/form/PosterForm.vue';
+import PosterMatter from '../../components/apply/matters/PosterMatter.vue';
+
+import BaseForm from '../../components/apply/form/BaseForm.vue';
+
 import Preview from '../../components/Preview.vue';
+
 export default {
 	name: 'applyform',
 	components: {
 		'preview': Preview,
+		'baseForm': BaseForm,
 	},
 	data () {
 		return {
+			//申请表基本信息
 			base: {
-				actname: '软件学院活动',
-				actaddr: 'C10',
+				name: '软件学院活动', //活动名称
+				address: 'C10',	//活动地址
+				startTime: '2019-01-01',	//活动开始时间
+				endTime: '2019-02-02',	//活动结束时间
+				description: '软件学院软件学院',	//活动简介
 			},
+
 			origin: this.$route.params.id,
 			current: this.$route.params.id,
 
@@ -202,29 +223,29 @@ export default {
 					Table: EtiquetteTable,
 					Matter: EtiquetteMatter,
 				},
-				ticket: {
-					type: 'ticket',
+				lectureTicket: {
+					type: 'lectureTicket',
 					has: false,
 					matter: null,
 					table: null,
-					Table: TicketTable,
-					Matter: TicketMatter,
+					Table: LectureTicketTable,
+					Matter: LectureTicketMatter,
 				},
-				presenter: {
-					type: 'presenter',
+				host: {
+					type: 'host',
 					has: false,
 					matter: null,
 					table: null,
-					Table: PresenterTable,
-					Matter: PresenterMatter,
+					Table: HostTable,
+					Matter: HostMatter,
 				},
-				publicity: {
-					type: 'publicity',
+				poster: {
+					type: 'poster',
 					has: false,
 					matter: null,
 					table: null,
-					Table: PublicityTable,
-					Matter: PublicityMatter,
+					Table: PosterTable,
+					Matter: PosterMatter,
 				},
 			},
 			isPreview: false,
@@ -237,28 +258,28 @@ export default {
 		etiquetteText: function(){
 			return !this.otherTables.etiquette.has ? '增添礼仪申请表' : '礼仪申请表';
 		},
-		ticketText: function(){
-			return !this.otherTables.ticket.has ? '增添讲座票申请表' : '讲座票申请表';
+		lectureTicketText: function(){
+			return !this.otherTables.lectureTicket.has ? '增添讲座票申请表' : '讲座票申请表';
 		},
-		presenterText: function(){
-			return !this.otherTables.presenter.has ? '增添主持人申请表' : '主持人申请表';
+		hostText: function(){
+			return !this.otherTables.host.has ? '增添主持人申请表' : '主持人申请表';
 		},
-		publicityText: function(){
-			return !this.otherTables.publicity.has ? '增添宣传物资申请表' : '宣传物资申请表';
+		posterText: function(){
+			return !this.otherTables.poster.has ? '增添宣传物资申请表' : '宣传物资申请表';
 		},
 
 		//添加表的button的type
 		etiquette_add_btn: function(){
 			return this.otherTables.etiquette.has ? 'info' : 'primary';
 		},
-		ticket_add_btn: function(){
-			return this.otherTables.ticket.has ? 'info' : 'primary';
+		lectureTicket_add_btn: function(){
+			return this.otherTables.lectureTicket.has ? 'info' : 'primary';
 		},
-		presenter_add_btn: function(){
-			return this.otherTables.presenter.has ? 'info' : 'primary';
+		host_add_btn: function(){
+			return this.otherTables.host.has ? 'info' : 'primary';
 		},
-		publicity_add_btn: function(){
-			return this.otherTables.publicity.has ? 'info' : 'primary';
+		poster_add_btn: function(){
+			return this.otherTables.poster.has ? 'info' : 'primary';
 		},
 
 		originTitle: function() {
@@ -289,20 +310,89 @@ export default {
 			return this.$route.params.id === 'activity';
 		}
 	},
+
+	updated (){
+		this.setData();
+	},
 	methods: {
+		//测试数据
+		setData (){
+			const data = {
+				ACTIVITYDATA: {
+					background: '活动背景',
+					objective: '面向对象',
+					organizer: '承办单位',
+					hostUnit: '主办单位',
+					// aim: '活动目的',
+					expectedNumOfParticipants: '预计参与人数',
+					note: '备注',
+				},
+				ETIQUETTEDATA: {
+					etiquetteJobs: ['颁奖', '引导',], //[string, string]
+					numOfEtiquette: 3,
+					rehearsalTime: '2019-01-01',
+					rehearsalSite: '排练地点',
+					// note: '备注',
+					descOfJob: '工作描述',
+				},
+				HOSTDATA: {
+					numOfHost: 4,
+					rehearsalTime: '2019-02-02',
+					rehearsalSite: '排练地点',
+					// note: '备注',
+					descOfJob: '工作描述',
+				},
+				POSTERDATA: {
+					deadline: '2019-03-03',
+					propagandaTextRequirement: '宣传文字要求',
+					posterSize: '海报大小',
+					note: '备注',
+				},
+				LECTURETICKETDATA: {
+					numOfTicket: 50,
+					ticketType: '分数类型',
+					ticketScore: 3,
+					note: '备注',
+				},
+			};
+			this.$refs.apyForm.setData(data[this.origin.toUpperCase() + 'DATA']);
+
+			for (let name of ['etiquette', 'lectureTicket', 'host', 'poster']){
+				let formName = name + 'Form';
+
+				if (!this.otherTables[name].has){
+					continue;
+				}
+				// console.log(formName);
+				this.$refs[formName].setData(data[name.toUpperCase() + 'DATA']);
+			}
+		},
+
 		//最终提交表单函数，在applySubmit函数中动态生成
 		apply (){
 			this.isPreview = false;
 		},
 		applySubmit (){
-			let form = this.getFormData();
-			if (form){
-				this.preview(form, true);
+			let form = this.getFormData(),
+				previewForm = this.getPreviewData();
+			if (form && previewForm){
+				this.preview(previewForm, true);
+
+				//动态生成apply函数
 				this.apply = () => {
 					this.isPreview = false;
-					apiApplyForm(form, () => {
-						this.clear();
-						this.$message.success('提交成功');
+					//动态生成url
+					// let url = '/application/' + this.origin;
+					// console.log(url);
+					apiApplyForm(this.origin, form, (res) => {
+						// console.log(res);
+						if (res.status === 200){
+							this.clear();
+							this.$message.success('提交成功');
+						}
+						else{
+							this.$message.error('提交失败');
+						}
 					});
 				};
 			}
@@ -313,35 +403,32 @@ export default {
 			// var t = new Date('2019-04-18 08:00:00')
 			// console.log(t)
 		},
+
 		//获取表单数据
 		getFormData (){
 			if (!this.formTitle){
 				return null;
 			}
-			var form = this.$refs['apyForm'].getSubmitForm();
-			if (!form){
+			let baseForm = this.$refs['baseForm'].getSubmitForm(),
+				apyForm = this.$refs['apyForm'].getSubmitForm(),
+				activityID = null,
+				form = {
+					activityBasicInfo: baseForm,
+				};
+
+			if (!baseForm || !apyForm){
 				return null;
 			}
-			// console.log(form);
+
+			// console.log('baseForm', baseForm);
+			// console.log(this.origin, apyForm);
 
 			if (this.isActivity){
-				var otherTables = [];
-				// results = ['etiquette', 'ticket', 'presenter', 'publicity'].forEach((value) =>{
-				// 		let formName = value + 'Form',
-				// 			otherForm = null;
-				// 		if (!this.otherTables[value].has){
-				// 			return;
-				// 		}
-				// 		otherForm = this.$refs[formName].getSubmitForm();
-				// 		if (otherForm){
-				// 			otherTables.push(otherForm);
-				// 			return 1;
-				// 		}
-				// 		else {
-				// 			return 0;
-				// 		}
-				// 	});
-				for (let name of ['etiquette', 'ticket', 'presenter', 'publicity']){
+			//活动表添加特殊的表项
+				form.activitySupplementaryInfo = apyForm;
+
+			//活动表包含其它从属表
+				for (let name of ['etiquette', 'lectureTicket', 'host', 'poster']){
 					let formName = name + 'Form',
 						otherForm = null;
 					if (!this.otherTables[name].has){
@@ -349,35 +436,97 @@ export default {
 					}
 					otherForm = this.$refs[formName].getSubmitForm();
 					if (otherForm){
-						otherTables.push(otherForm);
+						// console.log(name, otherForm);
+						// console.log(otherForm.type);
+						form[name] = otherForm;
 					}
 					else {
 						return null;
 					}
 				}
-				if (otherTables.length > 0){
-					form.otherTables = otherTables;
-				}
-				console.log(form);
-				// this.clearOthers();
 			}
+			else{
+				form.activityThisBelongsTo = activityID;
+				for (let key in apyForm){
+					form[key] = apyForm[key];
+				}
+			}
+
+			console.log(form);
 			return form;
 		},
+
+		//获取预览表单数据
+		getPreviewData (){
+			if (!this.formTitle){
+				return null;
+			}
+			let baseForm = this.$refs['baseForm'].getSubmitForm(),
+				apyForm = this.$refs['apyForm'].getSubmitForm(),
+				previewForm = {
+					type: this.origin,
+				};
+
+			if (!baseForm || !apyForm){
+				return null;
+			}
+
+			// console.log('baseForm', baseForm);
+			// console.log(this.origin, apyForm);
+
+			for (let form of [baseForm, apyForm]){
+				for (let key in form){
+					if (form.hasOwnProperty(key)){
+						previewForm[key] = form[key];
+					}
+				}
+			}
+
+			if (this.isActivity){
+			//活动表包含其它从属表
+				for (let name of ['etiquette', 'lectureTicket', 'host', 'poster']){
+					let formName = name + 'Form',
+						otherForm = null;
+					if (!this.otherTables[name].has){
+						continue;
+					}
+					otherForm = this.$refs[formName].getSubmitForm();
+					otherForm.type = name;
+					if (otherForm){
+						// console.log(name, otherForm);
+						// console.log(otherForm.type);
+						previewForm.otherForms || (previewForm.otherForms = []);
+						previewForm.otherForms.push(otherForm);
+					}
+					else {
+						return null;
+					}
+				}
+			}
+
+			// console.log(previewForm);
+			return previewForm;			
+		},
+
 		//清空表单
 		clear (){
+			this.$refs['baseForm'].clear();
 			this.$refs['apyForm'].clear();
-			['etiquette', 'ticket', 'presenter', 'publicity'].forEach((value) => {
+			['etiquette', 'lectureTicket', 'host', 'poster'].forEach((value) => {
 				if (this.otherTables[value].has){
 					let formName = value + "Form";
 					this.$refs[formName].clear();
 				}
 			});
 		},
+
 		//预览表单
 		preview (form, isApply){
 			this.isPreview = true;
 			this.previewData = form;
 		},
+
+		//切换表单
 		toggleTable (tableName){
 			if (tableName === 'origin'){
 				this.current = this.origin;
@@ -395,6 +544,8 @@ export default {
 				this.current = other.type;
 			}
 		},
+
+		//删除表单
 		deleteTable (tableName){
 			let other = this.otherTables[tableName];
 			if (other.has){

@@ -8,22 +8,24 @@
 					</td>
 				</tr>
 				<div v-for="(value, key) in detailData" :key="key">
-					<tr v-if="! (value instanceof Array)">
-						<td align="center">
-							<div class="ndetail-td-label">{{keyToStr(key)}}</div>
-						</td>
-						<td class="ndetail-td-value">{{value}}</td>
-					</tr>
-					<div v-else-if="key !== 'otherTables'">
-						<tr>
-							<td :rowspan="value.length" align="center" style="vertical-align: middle;">
+					<div v-if="keyToStr(key)">
+						<tr v-if="! (value instanceof Array)">
+							<td align="center">
 								<div class="ndetail-td-label">{{keyToStr(key)}}</div>
 							</td>
-							<td class="ndetail-td-value">{{value[0]}}</td>
+							<td class="ndetail-td-value">{{value}}</td>
 						</tr>
-						<tr v-for="subval in popValue(value)" :key="subval">
-							<td class="ndetail-td-value">{{subval}}</td>
-						</tr>
+						<div v-else-if="key !== 'otherForms'">
+							<tr>
+								<td :rowspan="value.length" align="center" style="vertical-align: middle;">
+									<div class="ndetail-td-label">{{keyToStr(key)}}</div>
+								</td>
+								<td class="ndetail-td-value">{{value[0]}}</td>
+							</tr>
+							<tr v-for="subval in popValue(value)" :key="subval">
+								<td class="ndetail-td-value">{{subval}}</td>
+							</tr>
+						</div>
 					</div>
 				</div>
 			</table>
@@ -45,14 +47,14 @@ export default {
 		title: function (){
 			let type = this.detailData.type,
 				t = ToFormName[type];
-			delete(this.detailData.type);
+			// delete(this.detailData.type);
 			return t ? t : type;
 		}
 	},
 	methods: {
 		keyToStr: function (key) {
 			var str = KeyToStr[key];
-			return str ? str : key;
+			return str;
 		},
 		popValue (valArr) {
 			// 去除头部第一个元素

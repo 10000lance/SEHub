@@ -32,27 +32,27 @@ export default {
 		  	},
 		  	{
 				name: '主持人申请',
-				path: '/apply/presenter'
+				path: '/apply/host'
 		  	},
-		  	{
-				name: '新媒体申请',
-				path: '/apply/newmedia'
-		  	},
-		  	{
-				name: '记者团申请',
-				path: '/apply/reporter'
-		  	},
+		  // 	{
+				// name: '新媒体申请',
+				// path: '/apply/newmedia'
+		  // 	},
+		  // 	{
+				// name: '记者团申请',
+				// path: '/apply/reporter'
+		  // 	},
 		  	{
 				name: '宣传物资申请',
-				path: '/apply/publicity'
+				path: '/apply/poster'
 		  	},
-		  	{
-				name: '秘书物资申请',
-				path: '/apply/material'
-		  	},
+		  // 	{
+				// name: '秘书物资申请',
+				// path: '/apply/material'
+		  // 	},
 		  	{
 				name: '讲座票申请',
-				path: '/apply/ticket'
+				path: '/apply/lectureTicket'
 			}
 		]
 	};

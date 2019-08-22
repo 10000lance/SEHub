@@ -55,18 +55,19 @@ export default {
 			this.$refs.ruleForm.validate(valid => {
 				if (valid) {
 					this.logining = true;
-					this.$router.push("/home");
-					// apiLogin(res => {
-					//   this.logining = false;
-					//   if (res.code === 0) {
-					//     // console.log('jwt:', res.jwt)
-					//     this.$store.commit("login", res.body.jwt);
-					//     this.$router.push("/home");
-					//   } else {
-					//     console.log("login fail");
-					//   }
-					//   // console.log(res)
-					// });
+					apiLogin(res => {
+					  	this.logining = false;
+					  	if (res.status === 200) {
+						   	// console.log('jwt:', res.jwt);
+					   		// this.$store.commit("login", res.body.jwt);
+					   		console.log(res);
+					    	this.$router.push("/home");
+					  	}
+					  	else {
+					    	console.log("login fail");
+					  	}
+					  	// console.log(res)
+					});
 				}
 			});
 		}

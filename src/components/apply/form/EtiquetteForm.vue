@@ -1,87 +1,84 @@
 <template>
 	<div>
-		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm" label-width="95px">
-			<el-form-item label="活动名称" prop="actname">
-				<el-input v-model="baseForm.actname" class="apy-input-normal"></el-input>
+		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
+			<el-form-item label="申请人数" prop="numOfEtiquette">
+				<el-input v-model.number="applyForm.numOfEtiquette" class="apy-input-normal"></el-input>
 			</el-form-item>
-			<el-form-item label="活动地点" prop="actaddr">
-				<el-input v-model="baseForm.actaddr" class="apy-input-normal"></el-input>
-			</el-form-item>
-		</el-form>
 
-		<el-form :model="applyForm" :rules="etirules" ref="applyForm" label-width="95px">
-			<el-form-item label="活动时间" prop="acttime">
-				<el-date-picker v-model="applyForm.acttime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+			<el-form-item label="彩排时间" prop="rehearsalTime">
+				<el-date-picker
+					v-model="applyForm.rehearsalTime"
+					type="datetime"
+					placeholder="活动结束日期"
+					value-format="yyyy-MM-dd"
+				></el-date-picker>
 			</el-form-item>
-			<el-form-item label="申请人数" prop="etinum">
-				<el-input v-model.number="applyForm.etinum" class="apy-input-normal"></el-input>
+
+			<el-form-item label="彩排地点" prop="rehearsalSite">
+				<el-input v-model="applyForm.rehearsalSite" class="apy-input-normal"></el-input>
 			</el-form-item>
-			<el-form-item label="礼仪工作" prop="etiwork">
-				<el-checkbox-group v-model="applyForm.etiwork">
+
+			<el-form-item label="礼仪工作" prop="etiquetteJobs">
+				<el-checkbox-group v-model="applyForm.etiquetteJobs">
 					<el-checkbox label="颁奖">颁奖</el-checkbox>
 					<el-checkbox label="引导">引导</el-checkbox>
 					<el-checkbox label="迎宾签到">迎宾签到</el-checkbox>
 					<el-checkbox label="其他">其他</el-checkbox>
 				</el-checkbox-group>
 			</el-form-item>
-			<el-form-item label="备注">
+
+			<el-form-item label="工作描述">
 				<el-input
 					type="textarea"
 					rows="5"
-					v-model="applyForm.others"
+					v-model="applyForm.descOfJob"
 					resize="none"
 					class="apy-text-normal"
 				></el-input>
 			</el-form-item>
+
 			<el-form-item label="上传附件">
 				<se-upload></se-upload>
 			</el-form-item>
+
 		</el-form>
 	</div>
 </template>
 <script>
 export default {
 	// name : 'etiquetteTable',
-	props: ['base'],
 	data () {	
 		return {
-			baseForm: this.base,
 			applyForm: {
-				acttime: '2019-10-1',		//活动时间
-				etinum: 3,			//申请人数
-				etiwork: ['引导'],		//礼仪工作
-				others: ''			//备注
+				numOfEtiquette: '',			//申请人数
+				etiquetteJobs: [],		//礼仪工作
+				rehearsalTime: '',	//彩排时间
+				rehearsalSite: '',	//彩排地点
+				descOfJob: '',	//工作描述
 			},
-			etirules: {
-				acttime: [{ required: true, message: '请选择活动日期' }],
-				etinum: [{ required: true, message: '请输入申请人数' }, { type: 'number', message: '请输入数字' }],
-				etiwork: [{ required: true, message: '请选择礼仪工作' }]
-			},
-			baseFormRules: {
-				actname: [{ required: true, message: '请输入活动名称' }],
-				actaddr: [{ required: true, message: '请输入活动区域' }],
+
+			rules: {
+				numOfEtiquette: [{ required: true, message: '请输入申请人数' }, { type: 'number', message: '请输入数字' }],
+				etiquetteJobs: [{ required: true, message: '请选择礼仪工作' }],
+				rehearsalTime: [{ required: true, message: '请输入彩排时间' }],
+				rehearsalSite: [{ required: true, message: '请输入彩排地点' }],
 			},
 		};
 	},
 	methods: {
 		getSubmitForm () {
-			var baseVaild = null,
-				applyVaild = null;
-			this.$refs.baseForm.validate((valid) => {
-				baseVaild = valid;
-			});
+			var applyVaild = null;
+
 			this.$refs.applyForm.validate((valid) => {
 				applyVaild = valid;
 			});
-			if (baseVaild && applyVaild) {
+			if (applyVaild) {
 				return {
-					type: 'etiquette',
-					actname: this.baseForm.actname,
-					actaddr: this.baseForm.actaddr,
-					acttime: new Date(this.applyForm.acttime),
-					etinum: this.applyForm.etinum,
-					etiwork: this.applyForm.etiwork.join('；'),
-					others: this.applyForm.others
+					numOfEtiquette: this.applyForm.numOfEtiquette,
+					etiquetteJobs: this.applyForm.etiquetteJobs,
+					rehearsalTime: this.applyForm.rehearsalTime,
+					rehearsalSite: this.applyForm.rehearsalSite,
+					descOfJob: this.applyForm.descOfJob,
 				};
 			}
 			else{
@@ -89,33 +86,30 @@ export default {
 				return null;
 			}
 		},
-		getPreviewForm () {
-			var previewObj = null
-			this.$refs.applyForm.validate((valid) => {
-				if (valid) {
-					previewObj = { title: '礼仪队申请', content: {} }
-					previewObj.content.postname = this.$store.state.user.name
-					previewObj.content.postdapart = this.$store.state.user.depart
-					previewObj.content.posttime = new Date().toLocaleString()
-					previewObj.content.actname = this.applyForm.actname
-					previewObj.content.actaddr = this.applyForm.actaddr
-					previewObj.content.acttime = this.applyForm.acttime
-					previewObj.content.etinum = this.applyForm.etinum + '人'
-					previewObj.content.etiwork = this.applyForm.etiwork.join('；')
-					previewObj.content.others = this.applyForm.others
-				}
-			});
-			return previewObj;
-		},
-		clear (){
-			this.clearApplyForm();
-			this.clearBaseForm();
-		},
-		clearApplyForm () {
+		// getPreviewForm () {
+		// 	var previewObj = null
+		// 	this.$refs.applyForm.validate((valid) => {
+		// 		if (valid) {
+		// 			previewObj = { title: '礼仪队申请', content: {} }
+		// 			previewObj.content.postname = this.$store.state.user.name
+		// 			previewObj.content.postdapart = this.$store.state.user.depart
+		// 			previewObj.content.posttime = new Date().toLocaleString()
+		// 			previewObj.content.actname = this.applyForm.actname
+		// 			previewObj.content.actaddr = this.applyForm.actaddr
+		// 			previewObj.content.acttime = this.applyForm.acttime
+		// 			previewObj.content.etinum = this.applyForm.etinum + '人'
+		// 			previewObj.content.etiwork = this.applyForm.etiwork.join('；')
+		// 			previewObj.content.others = this.applyForm.others
+		// 		}
+		// 	});
+		// 	return previewObj;
+		// },
+		clear () {
 			this.$refs['applyForm'].resetFields();
 		},
-		clearBaseForm (){
-			this.$refs['baseForm'].resetFields();
+
+		setData (formData){
+			this.applyForm = formData;
 		},
 	}
 }

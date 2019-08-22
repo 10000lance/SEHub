@@ -17,9 +17,9 @@
 							:key="idx"
 							@click="clickItem(item)"
 						>
-							<div class="notice---from">{{item.fromDepart}}&ensp;{{item.fromName}}</div>
-							<div class="notice---title">{{item.title}}</div>
-							<div class="notice---time">{{item.time}}</div>
+							<div class="notice---from">{{item.checkInfo.initializer.department}}&ensp;{{item.checkInfo.initializer.name}}</div>
+							<div class="notice---title">{{item.activityBasicInfo.name}}</div>
+							<div class="notice---time">{{item.checkInfo.submissionDate}}</div>
 						</div>
 					</div>
 				</div>
@@ -40,10 +40,9 @@
 							:key="idx"
 							@click="clickItem(item)"
 						>
-							<div class="notice---from">{{item.fromDepart}}&ensp;{{item.fromName}}</div>
-							<div class="notice---title">{{item.title}}</div>
-							<!-- <div class="notice---state">{{item.state}}</div> -->
-							<div class="notice---time">{{item.time}}</div>
+							<div class="notice---from">{{item.checkInfo.initializer.department}}&ensp;{{item.checkInfo.initializer.name}}</div>
+							<div class="notice---title">{{item.activityBasicInfo.name}}</div>
+							<div class="notice---time">{{item.checkInfo.submissionDate}}</div>
 						</div>
 					</div>
 				</div>
@@ -72,18 +71,55 @@ export default {
 	},
 	methods: {
 		clickItem (item) {
-			console.log(item.id);
+			// console.log(item.id);
 			this.$router.push('/notice/detail/' + item.id);
-		}
+		},
 	},
+
+	//销毁组件时，删除缓存notices
+	destroyed (){
+		this.$store.commit('saveNotices', [], []);
+	},
+
 	//获取数据
 	beforeMount () {
-		let arr = apiGetNotices();
-		console.log(arr);
-		arr.forEach( (value) => {
-			//state为1表示已处理，为0表示未处理
-			value.state === 1 && this.solvedArr.push(value);
-			value.state === 0 && this.waitArr.push(value);
+		apiGetNotices(res => {
+			// console.log(res);
+			if (res.status === 200){
+				let data = res.data;
+			//填充waitArr和solvedArr
+				for (let type of ['etiquette', 'host', 'lectureTicket', 'poster']){
+					if (data.hasOwnProperty(type) && data[type] instanceof Array){
+						for (let form of data[type]){
+							form.type = type;
+							let checkStatus = form.checkInfo.checkStatus;
+							if (checkStatus === 'checking'){
+								this.waitArr.push(form);
+							}
+							else if(checkStatus === 'passed' || checkStatus === 'nopassed'){
+								this.solvedArr.push(form);
+							}
+						}	
+					}
+				}
+			//对两个列表从submissionDate上排序
+				for (let arr of [this.waitArr, this.solvedArr]){
+					arr.sort(function(a, b){
+						let date1 = a.checkInfo.submissionDate,
+							date2 = b.checkInfo.submissionDate;
+						date1 = date1.replace(/-/g,'');
+						date2 = date2.replace(/-/g,'');
+						// console.log(date1, date2);
+						return date2 - date1;						
+					});
+				}
+			//缓存notices
+				this.$store.commit('saveNotices',{waitArr: this.waitArr, solvedArr: this.solvedArr});
+				// console.log('after', this.$store.state);
+			}
+			else{
+				console.log('Failed to get notices');
+			}
 		});
 	}
 };

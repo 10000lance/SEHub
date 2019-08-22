@@ -1,9 +1,9 @@
 <template>
 <div>
 	<formTable :detailData="previewData"></formTable>
-	<div v-if="'otherTables' in previewData" v-for="otherTable in previewData.otherTables">
+	<div v-for="form in previewData.otherForms">
 		<el-divider></el-divider>
-		<formTable :detailData="otherTable"></formTable>
+		<formTable :detailData="form"></formTable>
 	</div>
 </div>
 </template>
@@ -23,6 +23,5 @@ export default {
 
 		};
 	},
-
 };
 </script>

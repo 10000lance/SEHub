@@ -51,6 +51,12 @@ export default {
 	beforeMount () {
 		var that = this;
 		apiGetActivities(res => {
+			if (res.status === 200){
+
+			}
+			else{
+				
+			}
 			that.activities.ongoing = res.ongoing;
 			that.activities.timelines = res.timelines;
 		});
