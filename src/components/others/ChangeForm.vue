@@ -226,7 +226,7 @@ export default {
 		// },
 	//是否有权限去修改权限
 		hasAuthorityToChange (){
-			return ['Minister', 'StandingCommittee', 'Admin'].indexOf(this.$store.state.userInfo.position) === -1;
+			return ['Minister', 'StandingCommittee'].indexOf(this.$store.state.userInfo.position) === -1;
 		},
 	},
 };

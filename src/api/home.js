@@ -9,6 +9,7 @@ export function apiLogin (username, password, callback) {
 	axios.post('/login', q).then(res => callback(res))
 		.catch(error => {
 			console.log(error);
+			this.$message('登陆失败');
 		});
 }
 
@@ -35,6 +36,7 @@ export function apiAdminLogin (username, password, callback) {
 	})
 		.catch(error => {
 			console.log(error);
+			this.$message('登陆失败');
 		});
 
 }

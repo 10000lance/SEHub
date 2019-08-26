@@ -52,10 +52,10 @@ export function apiAdminPutMember (member, callback){
 export function apiAdminPostMember (member, callback){
 	// console.log(member);
 	axios.post('/admin/member', member, {
-		headers: {
-	       'Content-Type': 'application/json',
-	       // 'Accept': 'application/json',
-	    }
+		// headers: {
+	 //       'Content-Type': 'application/json',
+	 //       // 'Accept': 'application/json',
+	 //    }
 	})
 		.then(res => {
 			callback(res);
