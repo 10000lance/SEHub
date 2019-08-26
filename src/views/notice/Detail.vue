@@ -1,5 +1,5 @@
 <template>
-	<div :class="this.checkStatus" v-loading="loading">
+	<div :class="this.checkStatus">
 		<div v-if="this.showTable">
 	 		<form-table :detailData="detailData" ></form-table>
 			<div v-for="table in otherTables">
@@ -31,6 +31,7 @@
 import { apiGetDetail } from '../../api/notice.js';
 import Table from '../../components/Table.vue';
 import { checkForm } from '../../api/notice.js';
+import { NEEDDECODEDETAIL }  from '../../assets/js/decode.js';
 
 export default {
 	components: {
@@ -55,12 +56,12 @@ export default {
 			let checkInfo = {
 				id: this.$route.params.id,
 				pass: true,
-				feedback: this.checkFeedback,
+				feedback: encodeURI(this.checkFeedback),
 			},
 			formType =	this.detailData.type;
 			checkForm(formType, checkInfo, (res) => {
 				if (res.status === 200){
-					this.checkStatus = 'passed';
+					this.checkStatus = 'PASS';
 					this.$message.success('提交成功');
 				}
 				else {
@@ -72,12 +73,12 @@ export default {
 			let checkInfo = {
 				id: this.$route.params.id,
 				pass: false,
-				feedback: this.checkFeedback,
+				feedback: encodeURI(this.checkFeedback),
 			},
 			formType =	this.detailData.type; 
 			checkForm(formType, checkInfo, (res) => {
 				if (res.status === 200){
-					this.checkStatus = 'nopassed';
+					this.checkStatus = 'NOPASS';
 					this.$message.success('提交成功');
 				}
 				else {
@@ -89,7 +90,7 @@ export default {
 
 	computed: {
 		check (){
-			return this.checkStatus === 'checking';
+			return this.checkStatus === 'WAIT';
 		},
 	},
 
@@ -120,16 +121,28 @@ export default {
 						this.detailData[key] = form[key];
 					}
 				}
+
+				for (let key in this.detailData){
+					if (NEEDDECODEDETAIL.indexOf(key) !== -1){
+						this.detailData[key] = decodeURI(this.detailData[key], 'utf-8');
+					}
+				}
 				this.showTable = true;
 				// console.log(this.detailData);
 				this.checkStatus = form.checkInfo.checkStatus;
-				this.checkFeedback = form.checkInfo.checkFeedback ? form.checkInfo.checkFeedback : '';
+				this.checkFeedback = form.checkInfo.checkFeedback ? decodeURI(form.checkInfo.checkFeedback, 'utf-8') : '';
 
 			//提取从属表
 				for (let subType of ['Etiquette', 'Host', 'Poster', 'LictureTicket']){
 					if (form.hasOwnProperty(subType)){
 						form[subType].type = subType.toLowerCase();
+						for (let key in form[subType]){
+							if (NEEDDECODEDETAIL.indexOf(key) !== -1){
+								form[subType][key] = decodeURI(form[subType][key], 'utf-8');
+							}
+						}
 						this.otherTables.push(form[subType]);
+
 					}
 				}
 			}

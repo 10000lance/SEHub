@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { NEEDDECODEBASEFORM } from '../../../assets/js/decode.js';
+
 export default {
 	props: [
 		'baseForm',
@@ -63,7 +65,7 @@ export default {
 		};
 	},
 	methods: {
-		getSubmitForm () {
+		getPreviewForm () {
 			var baseVaild = null;
 
 			this.$refs.baseForm.validate((valid) => {
@@ -84,6 +86,34 @@ export default {
 				return null;
 			}
 		},
+		getSubmitForm () {
+			var baseVaild = null;
+			let formData = {};
+			this.$refs.baseForm.validate((valid) => {
+				baseVaild = valid;
+			});
+
+			if (baseVaild) {
+				formData = {
+					name: this.baseForm.name,
+					location: this.baseForm.location,
+					startTime: this.baseForm.startTime,
+					endTime: this.baseForm.endTime,
+					description: this.baseForm.description,
+				};
+				for (let key in formData){
+					if (NEEDDECODEBASEFORM.indexOf(key) !== -1){
+						formData[key] = encodeURI(formData[key]);
+					}
+				}
+				return formData;
+			}
+			else{
+				this.$message.error("请正确填写表单");			
+				return null;
+			}
+		},
+
 		clear (){
 			this.$refs['baseForm'].resetFields();
 		},

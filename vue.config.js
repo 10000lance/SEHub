@@ -52,7 +52,7 @@ module.exports = {
 		//          cookieDomainRewrite: "localhost",		    	
 		//     }
 		// }
-		proxy: 'http://localhost:8081',
+		proxy: 'http://106.53.93.41:8081',
 		// proxy: 'http://47.101.130.113:8081',
 	}
 };

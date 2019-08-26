@@ -202,6 +202,7 @@ export default {
 					apiAdminPostMember(form, (res => {
 						console.log('res:', res);
 						if (res.status === 200){
+							form.name = decodeURI(form.name, 'utf-8');
 							this.memberList.push(form);
 							// console.log('res:', res);
 							this.$message.success('添加成功');
@@ -248,6 +249,9 @@ export default {
 		apiAdminGetUsers(res => {
 			if (res.status === 200){
 				this.memberList = res.data.allMember;
+				for (let member of this.memberList){
+					member.name = decodeURI(member.name, 'utf-8');
+				}
 				this.departmentList = res.data.allDepartment;
 				// console.log('memberList', this.memberList);
 				// console.log('departmentList', this.departmentList);

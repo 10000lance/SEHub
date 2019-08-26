@@ -22,13 +22,13 @@
 export default {
 	data () {
 		return {
-
+			personName: this.$store.userInfo.name.slice(0, 2),
 		};
 	},
 	computed: {
-		personName: function () {
-			return '吴';
-		},
+		// personName: function () {
+		// 	return '吴';
+		// },
 		isAdmin: function () {
 			return false;
 		}

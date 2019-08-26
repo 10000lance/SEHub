@@ -15,20 +15,20 @@
 			</div>
 		</transition>
  -->
- 		<change-form :personInfo="personInfo"></change-form>		
+ 		<person-info :personInfo="personInfo"></person-info>		
 	</div>
 </div>
 </template>
 <script>
 // import PersonInfo from '../../components/others/PersonInfo.vue';
-import ChangeForm from '../../components/others/ChangeForm.vue';
+// import ChangeForm from '../../components/others/ChangeForm.vue';
 // import PersonAndChange from '../../components/others/PersonAndChange.vue';
 // import { apiAddAuthoritiee, apiRemoveAuthoritiee } from '../../api/department.js';
-
+import PersonInfo from './PersonInfo.vue';
 export default {
 	components: {
-		// 'person-info': PersonInfo,
-		'change-form': ChangeForm,
+		'person-info': PersonInfo,
+		// 'change-form': ChangeForm,
 		// 'person-and-change': PersonAndChange,
 	},
 	data (){

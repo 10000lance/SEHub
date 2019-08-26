@@ -105,14 +105,17 @@ export default {
 			    ],
 		//不能修改的职责列表
 			notChange: [
-
+				'studentNumber',
+				'name',
+				'department',
+				'position',
 			]
 		};
 	},
 	beforeMount (){
 		let position = this.$store.state.userInfo.position;
 		// console.log(this.$store.state.userInfo);
-		this.notChange = getNotChange(position);
+		// this.notChange = getNotChange(position);
 		// console.log(this.notChange);
 	},
 	methods: {

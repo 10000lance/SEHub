@@ -51,6 +51,7 @@ export function apiAdminPutMember (member, callback){
 //管理员增加用户
 export function apiAdminPostMember (member, callback){
 	// console.log(member);
+	member.name = encodeURI(member.name);
 	axios.post('/admin/member', member, {
 		// headers: {
 	 //       'Content-Type': 'application/json',

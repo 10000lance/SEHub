@@ -19,13 +19,15 @@
 			</el-form-item>
 
 			<el-form-item label="礼仪工作" prop="etiquetteJobs" class="apy-item">
-				<el-checkbox-group v-model="applyForm.etiquetteJobs">
+<!-- 				<el-checkbox-group v-model="applyForm.etiquetteJobs">
 					<el-checkbox label="颁奖">颁奖</el-checkbox>
 					<el-checkbox label="引导">引导</el-checkbox>
 					<el-checkbox label="迎宾签到">迎宾签到</el-checkbox>
 					<el-checkbox label="其他">其他</el-checkbox>
 				</el-checkbox-group>
-			</el-form-item>
+ -->
+ 				<el-input v-model="applyForm.etiquetteJobs" class="apy-input-normal"></el-input>
+ 			</el-form-item>
 
 			<el-form-item label="工作描述" class="apy-item">
 				<el-input
@@ -45,13 +47,15 @@
 	</div>
 </template>
 <script>
+import { NEEDDECODEETIQUETTEFORM } from '../../../assets/js/decode.js';
+
 export default {
 	// name : 'etiquetteTable',
 	data () {	
 		return {
 			applyForm: {
 				numOfEtiquette: '',			//申请人数
-				etiquetteJobs: [],		//礼仪工作
+				etiquetteJobs: '',		//礼仪工作
 				rehearsalTime: '',	//彩排时间
 				rehearsalSite: '',	//彩排地点
 				descOfJob: '',	//工作描述
@@ -66,7 +70,7 @@ export default {
 		};
 	},
 	methods: {
-		getSubmitForm () {
+		getPreviewForm () {
 			var applyVaild = null;
 
 			this.$refs.applyForm.validate((valid) => {
@@ -80,6 +84,32 @@ export default {
 					rehearsalSite: this.applyForm.rehearsalSite,
 					descOfJob: this.applyForm.descOfJob,
 				};
+			}
+			else{
+				this.$message.error("请正确输入礼仪申请表");
+				return null;
+			}
+		},
+		getSubmitForm () {
+			var applyVaild = null;
+			let formData = {};
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (applyVaild) {
+				formData = {
+					numOfEtiquette: this.applyForm.numOfEtiquette,
+					etiquetteJobs: this.applyForm.etiquetteJobs,
+					rehearsalTime: this.applyForm.rehearsalTime,
+					rehearsalSite: this.applyForm.rehearsalSite,
+					descOfJob: this.applyForm.descOfJob,
+				};
+				for (let key in formData){
+					if (NEEDDECODEETIQUETTEFORM.indexOf(key) !== -1){
+						formData[key] = encodeURI(formData[key]);
+					}
+				}
+				return formData;
 			}
 			else{
 				this.$message.error("请正确输入礼仪申请表");

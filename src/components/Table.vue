@@ -7,6 +7,7 @@
 						<div class="ndetail-td-title">{{title}}</div>
 					</td>
 				</tr>
+
 				<div v-for="(value, key) in detailData" :key="key">
 					<div v-if="keyToStr(key)">
 						<div v-if="! (value instanceof Array)" class="tr-bar clearfix">
@@ -19,6 +20,8 @@
 						</div>
 					</div>
 				</div>
+
+				
 			</table>
 		</div>
 	</div>

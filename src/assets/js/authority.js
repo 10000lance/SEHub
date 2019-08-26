@@ -1,16 +1,16 @@
 //不能更改的表单项
 export function getNotChange (position){
 	const MINISTER = [
-		// 'studentNumber',
-		// 'name',
+		'studentNumber',
+		'name',
 		'department',
 		'position',
 		// 'phone',
 		// 'email',
 	],
 	STANDINGCOMMITTEE = [
-		// 'studentNumber',
-		// 'name',
+		'studentNumber',
+		'name',
 		'department',
 		'position',
 		// 'phone',
@@ -21,8 +21,8 @@ export function getNotChange (position){
 		'name',
 		'department',
 		'position',
-		// 'phone',
-		// 'email',
+		'phone',
+		'email',
 	],
 	ADMIN = [
 

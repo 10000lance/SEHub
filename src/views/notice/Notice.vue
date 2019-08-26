@@ -109,13 +109,15 @@ export default {
 				let data = res.data;
 			//填充waitArr和solvedArr
 				for (let form of data){
+					form.activityBasicInfo.name = decodeURI(form.activityBasicInfo.name, 'utf-8');
+					form.checkInfo.initializer.name = decodeURI(form.checkInfo.initializer.name, 'utf-8');
 					form.departAndName = this.keyToName(form.checkInfo.initializer.department) + "	" + form.checkInfo.initializer.name;
 					let checkStatus = form.checkInfo.checkStatus;
 					// console.log('checkStatus: ', checkStatus);
-					if (checkStatus === 'checking'){
+					if (checkStatus === 'WAIT'){
 						this.waitArr.push(form);
 					}
-					else if(checkStatus === 'passed' || checkStatus === 'nopassed'){
+					else if(checkStatus === 'PASS' || checkStatus === 'NOPASS'){
 						this.solvedArr.push(form);
 					}	
 				}

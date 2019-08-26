@@ -1,5 +1,6 @@
 import axios from 'axios';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+// import { NEEDDECODEBASEFORM, NEEDDECODEACTIVITYFORM, NEEDDECODEETIQUETTEFORM, NEEDDECODEHOSTFORM, NEEDDECODELECTURETICKET, NEEDDECODEPOSTERFORM, } from '../assets/js/decode.js';
 
 const toApiUrl = {
 	activity: '/application/activity',

@@ -194,6 +194,8 @@ import BaseForm from '../../components/apply/form/BaseForm.vue';
 
 import Preview from '../../components/Preview.vue';
 
+import { NEEDDECODEBASEFORM, NEEDDECODEACTIVITYFORM, NEEDDECODEETIQUETTEFORM, NEEDDECODEHOSTFORM, NEEDDECODELECTURETICKET, NEEDDECODEPOSTERFORM, } from '../../assets/js/decode.js';
+
 export default {
 	name: 'applyform',
 	components: {
@@ -350,7 +352,7 @@ export default {
 				},
 				LECTURETICKETDATA: {
 					numOfTicket: 50,
-					ticketType: '分数类型',
+					ticketType: 'DeYu',
 					ticketScore: 3,
 					note: '备注',
 				},
@@ -461,8 +463,8 @@ export default {
 			if (!this.formTitle){
 				return null;
 			}
-			let baseForm = this.$refs['baseForm'].getSubmitForm(),
-				apyForm = this.$refs['apyForm'].getSubmitForm(),
+			let baseForm = this.$refs['baseForm'].getPreviewForm(),
+				apyForm = this.$refs['apyForm'].getPreviewForm(),
 				previewForm = {
 					type: this.origin,
 				};
@@ -490,7 +492,7 @@ export default {
 					if (!this.otherTables[name].has){
 						continue;
 					}
-					otherForm = this.$refs[formName].getSubmitForm();
+					otherForm = this.$refs[formName].getPreviewForm();
 					otherForm.type = name;
 					if (otherForm){
 						// console.log(name, otherForm);

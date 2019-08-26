@@ -6,8 +6,17 @@
 			</el-form-item>
  -->
 			<el-form-item label="分数类型" prop="ticketType" class="apy-item">
-				<el-input v-model="applyForm.ticketType" class="apy-input-normal"></el-input>
-			</el-form-item>
+<!-- 				<el-input v-model="applyForm.ticketType" class="apy-input-normal"></el-input>
+ -->
+				<el-select
+					v-model="applyForm.ticketType"
+					class="apy-input-normal"
+					>
+				    <el-option label="德育分" value="DeYu"></el-option>
+				    <el-option label="创新分" value="ChuangXin"></el-option>
+				    <el-option label="人文分" value="RenWen"></el-option>
+			    </el-select>
+ 			</el-form-item>
 
 			<el-form-item label="分值" prop="ticketScore" class="apy-item">
 				<el-input v-model="applyForm.ticketScore" class="apy-input-normal"></el-input>
@@ -17,16 +26,6 @@
 				<el-input v-model.number="applyForm.numOfTicket" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="备注" class="apy-item">
-				<el-input
-					type="textarea"
-					rows="5"
-					v-model="applyForm.note"
-					resize="none"
-					class="apy-text-normal"
-				></el-input>
-			</el-form-item>
-
 			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
 			</el-form-item>
@@ -34,15 +33,15 @@
 	</div>
 </template>
 <script>
+import { NEEDDECODELECTURETICKET } from '../../../assets/js/decode.js';
 
 export default {
 	data () {
 		return {
 			applyForm: {
-				ticketType: '创新分',
+				ticketType: 'DeYu',
 				ticketScore: 2,
 				numOfTicket: '',
-				note: ''
 			},
 			rules: {
 				ticketType: [{ required: true, message: '请输入讲座票类型' }],
@@ -52,7 +51,7 @@ export default {
 		};
 	},
 	methods: {
-		getSubmitForm () {
+		getPreviewForm () {
 			var applyVaild = null;
 
 			this.$refs.applyForm.validate((valid) => {
@@ -63,8 +62,31 @@ export default {
 					ticketType: this.applyForm.ticketType,
 					ticketScore: this.applyForm.ticketScore,
 					numOfTicket: this.applyForm.numOfTicket,
-					note: this.applyForm.note,
 				};
+			}
+			else{
+				this.$message.error("请正确输入讲座票申请表");
+				return null;
+			}
+		},
+		getSubmitForm () {
+			var applyVaild = null;
+			let formData = {};
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (applyVaild) {
+				formData = {
+					ticketType: this.applyForm.ticketType,
+					ticketScore: this.applyForm.ticketScore,
+					numOfTicket: this.applyForm.numOfTicket,
+				};
+				for (let key in formData){
+					if (NEEDDECODELECTURETICKET.indexOf(key) !== -1){
+						formData[key] = encodeURI(formData[key]);
+					}
+				}
+				return formData;
 			}
 			else{
 				this.$message.error("请正确输入讲座票申请表");

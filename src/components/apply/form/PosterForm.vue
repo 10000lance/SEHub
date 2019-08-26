@@ -54,15 +54,6 @@
 			</el-button>
 			<div class="apy-form-dashed" style="margin-top:25px;"></div>
  -->
-			<el-form-item label="备注" prop="note" class="apy-item">
-				<el-input
-					type="textarea"
-					rows="5"
-					v-model="applyForm.note"
-					resize="none"
-					class="apy-text-normal"
-				></el-input>
-			</el-form-item>
 
 			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
@@ -71,6 +62,7 @@
 	</div>
 </template>
 <script>
+import { NEEDDECODEPOSTERFORM } from '../../../assets/js/decode.js';
 
 export default {
 	data () {
@@ -84,7 +76,6 @@ export default {
 				// }],
 				propagandaTextRequirement: '',	//宣传文字要求
 				posterSize: '', //海报大小
-				note: ''
 			},
 			rules: {
 				deadline: [{ required: true, message: '请选择预计交付时间' }],
@@ -102,7 +93,7 @@ export default {
 		delApyNeeds (index) {
 			this.applyForm.publicityNeeds.splice(index, 1);
 		},
-		getSubmitForm () {
+		getPreviewForm () {
 			var applyVaild = null;
 
 			this.$refs.applyForm.validate((valid) => {
@@ -123,7 +114,6 @@ export default {
 					propagandaTextRequirement: this.applyForm.propagandaTextRequirement,
 					posterSize: this.applyForm.posterSize,
 					// publicityNeeds: needs,
-					note: this.applyForm.note,
 				};
 			}
 			else{
@@ -131,40 +121,74 @@ export default {
 				return null;
 			}
 		},
-		getPreviewForm () {
-			var previewObj = null;
-			this.$refs['applyForm'].validate((valid) => {
-				if (valid) {
-					previewObj = { title: '宣传物资申请',
-						content: {
-							postname: this.$store.state.user.name,
-							postdapart: this.$store.state.user.depart,
-							posttime: new Date().toLocaleString(),
-							actname: this.applyForm.actname,
-							actaddr: this.applyForm.actaddr,
-							actTime: this.applyForm.actTime,
-							dlytime: this.applyForm.dlytime,
-							actintro: this.applyForm.actintro,
-							publicityNeeds: '',
-							pubcontent: this.applyForm.pubcontent,
-							pubothers: this.applyForm.pubothers
-						}
-					};
-					if (this.applyForm.publicityNeeds.length === 0) {
-						previewObj.content.publicityNeeds = '无';
-					} else if (this.applyForm.publicityNeeds.length === 1) {
-						let val = this.applyForm.publicityNeeds[0];
-						previewObj.content.publicityNeeds = val.name + '  大小：' + val.size + '  数量：' + val.num;
-					} else {
-						previewObj.content.publicityNeeds = [];
-						for (let i of this.applyForm.publicityNeeds) {
-							previewObj.content.publicityNeeds.push(i.name + '  大小：' + i.size + '  数量：' + i.num);
-						}
+		getSubmitForm () {
+			var applyVaild = null;
+			let formData = {};
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (applyVaild) {
+				// var needs = null;
+				// if (this.applyForm.publicityNeeds.length === 0) {
+				// 	needs = '无';
+				// } else {
+				// 	needs = [];
+				// 	for (let i of this.applyForm.publicityNeeds) {
+				// 		needs.push(i.name + '  大小：' + i.size + '  数量：' + i.num);
+				// 	}
+				// }
+				formData = {
+					deadline: this.applyForm.deadline,
+					propagandaTextRequirement: this.applyForm.propagandaTextRequirement,
+					posterSize: this.applyForm.posterSize,
+					// publicityNeeds: needs,
+				};
+				for (let key in formData){
+					if (NEEDDECODEPOSTERFORM.indexOf(key) !== -1){
+						formData[key] = encodeURI(formData[key]);
 					}
 				}
-			});
-			return previewObj;
+				return formData;
+			}
+			else{
+				this.$message.error("请正确输入宣传物资申请表");
+				return null;
+			}
 		},
+		// getPreviewForm () {
+		// 	var previewObj = null;
+		// 	this.$refs['applyForm'].validate((valid) => {
+		// 		if (valid) {
+		// 			previewObj = { title: '宣传物资申请',
+		// 				content: {
+		// 					postname: this.$store.state.user.name,
+		// 					postdapart: this.$store.state.user.depart,
+		// 					posttime: new Date().toLocaleString(),
+		// 					actname: this.applyForm.actname,
+		// 					actaddr: this.applyForm.actaddr,
+		// 					actTime: this.applyForm.actTime,
+		// 					dlytime: this.applyForm.dlytime,
+		// 					actintro: this.applyForm.actintro,
+		// 					publicityNeeds: '',
+		// 					pubcontent: this.applyForm.pubcontent,
+		// 					pubothers: this.applyForm.pubothers
+		// 				}
+		// 			};
+		// 			if (this.applyForm.publicityNeeds.length === 0) {
+		// 				previewObj.content.publicityNeeds = '无';
+		// 			} else if (this.applyForm.publicityNeeds.length === 1) {
+		// 				let val = this.applyForm.publicityNeeds[0];
+		// 				previewObj.content.publicityNeeds = val.name + '  大小：' + val.size + '  数量：' + val.num;
+		// 			} else {
+		// 				previewObj.content.publicityNeeds = [];
+		// 				for (let i of this.applyForm.publicityNeeds) {
+		// 					previewObj.content.publicityNeeds.push(i.name + '  大小：' + i.size + '  数量：' + i.num);
+		// 				}
+		// 			}
+		// 		}
+		// 	});
+		// 	return previewObj;
+		// },
 		clear () {
 			this.$refs['applyForm'].resetFields();
 		},

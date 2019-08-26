@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { NEEDDECODEACTIVITYFORM } from '../../../assets/js/decode.js';
+
 export default {
 	// name : 'activityTable',
 	props: [
@@ -75,7 +77,7 @@ export default {
 	},
 	// 每一个Form组件都要重载getSubmitForm和clear方法
 	methods: {
-		getSubmitForm () {
+		getPreviewForm () {
 			var applyVaild = null;
 
 			this.$refs.applyForm.validate((valid) => {
@@ -97,6 +99,35 @@ export default {
 				return null;
 			}
 		},
+		getSubmitForm () {
+			var applyVaild = null;
+			let formData = {};
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (applyVaild) {
+				formData = {
+					background: this.applyForm.background,
+					// aim: this.applyForm.aim,
+					hostUnit: this.applyForm.hostUnit,
+					organizer: this.applyForm.organizer,
+					objective: this.applyForm.objective,
+					expectedNumOfParticipants: this.applyForm.expectedNumOfParticipants,
+					note: this.applyForm.note,
+				};
+				for (let key in formData){
+					if (NEEDDECODEACTIVITYFORM.indexOf(key) !== -1){
+						formData[key] = encodeURI(formData[key]);
+					}
+				}
+				return formData;
+			}
+			else{
+				this.$message.error("请正确填写活动申请表");			
+				return null;
+			}
+		},
+
 		// getPreviewForm () {
 		// 	var previewObj = null;
 		// 	this.$refs['applyForm'].validate((valid) => {

@@ -105,11 +105,11 @@ export default {
 		// }
 		checkStatusToColor (checkStatus){
 			switch (checkStatus){
-				case 'checking':
+				case 'WAIT':
 					return 'warning';
-				case 'passed':
+				case 'PASS':
 					return 'success';
-				case 'nopassed':
+				case 'NOPASS':
 					return 'danger';
 			}
 		},
@@ -125,6 +125,10 @@ export default {
 		apiGetActivities(res => {
 			if (res.status === 200){
 				this.activities = res.data;
+				for (let activity of this.activities){
+					activity.activityBasicInfo.name = decodeURI(activity.activityBasicInfo.name, 'utf-8');
+					activity.checkInfo.initializer.name = decodeURI(activity.checkInfo.initializer.name, 'utf-8');
+				}
 				this.activities.sort(function(a, b){
 					let date1 = a.checkInfo.submissionDate,
 						date2 = b.checkInfo.submissionDate;

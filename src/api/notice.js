@@ -18,11 +18,14 @@ export function checkForm (formType, checkInfo, callback){
 	let url = toApiUrl[formType] + checkInfo.id;
 	console.log(formType);
 	console.log(url);
-	axios.post(url, checkInfo)
+	let info = 'feedback=' + checkInfo.feedback + '&pass=' + checkInfo.pass ;
+	axios.post(url, info)
 		.then(res => {
 			callback(res);
 		})
-		.catch(error => console.log(error));
+		.catch(error => {
+			console.log(error);
+		});
 }
 
 export function apiGetDetail (type, id, callback){

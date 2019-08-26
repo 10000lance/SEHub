@@ -23,6 +23,7 @@
 import { apiGetDetail } from '../../api/notice.js';
 import Table from '../../components/Table.vue';
 import { checkForm } from '../../api/notice.js';
+import { NEEDDECODEDETAIL }  from '../../assets/js/decode.js';
 
 export default {
 	components: {
@@ -76,15 +77,26 @@ export default {
 						this.detailData[key] = form[key];
 					}
 				}
+
+				for (let key in this.detailData){
+					if (NEEDDECODEDETAIL.indexOf(key) !== -1){
+						this.detailData[key] = decodeURI(this.detailData[key], 'utf-8');
+					}
+				}
 				this.showTable = true;
 				// console.log(this.detailData);
 				this.checkStatus = form.checkInfo.checkStatus;
-				this.checkFeedback = form.checkInfo.checkFeedback ? form.checkInfo.checkFeedback : '';
+				this.checkFeedback = form.checkInfo.checkFeedback ? decodeURI(form.checkInfo.checkFeedback, 'utf-8') : '';
 
 			//提取从属表
 				for (let subType of ['Etiquette', 'Host', 'Poster', 'LictureTicket']){
 					if (form.hasOwnProperty(subType)){
 						form[subType].type = subType.toLowerCase();
+						for (let key in form[subType]){
+							if (NEEDDECODEDETAIL.indexOf(key) !== -1){
+								form[subType][key] = decodeURI(form[subType][key], 'utf-8');
+							}
+						}
 						this.otherTables.push(form[subType]);
 					}
 				}

@@ -53,6 +53,7 @@ export default {
 		apiGetDepartment(res => {
 			if (res.status === 200){
 				this.departmentInfo = res.data;
+				this.departmentInfo.name = decodeURI(this.departmentInfo.name, 'utf-8');
 				console.log(this.departmentInfo);
 			}
 			else {

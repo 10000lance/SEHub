@@ -22,6 +22,7 @@ export default new Vuex.Store({
 			// sessionStorage.setItem("jwt", jwt);
 			// sessionStorage.setItem("selogin", true);
 			//缓存个人信息
+			userInfo.name = decodeURI(userInfo.name, 'utf-8');
 			state.userInfo = userInfo;
 		},
 	},

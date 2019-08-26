@@ -46,8 +46,9 @@ const AUTHORITIEESLIST = {
 };
 
 const TICKETTYPE = {
-
-
+    DeYu: '德育分',
+    ChuangXin: '创新分',
+    RenWen: '人文分',
 };
 
 export {

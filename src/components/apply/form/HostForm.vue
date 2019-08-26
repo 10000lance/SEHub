@@ -31,6 +31,7 @@
 	</div>
 </template>
 <script>
+import { NEEDDECODEHOSTFORM } from '../../../assets/js/decode.js';
 
 export default {
 	data () {
@@ -49,7 +50,7 @@ export default {
 		};
 	},
 	methods: {
-		getSubmitForm () {
+		getPreviewForm () {
 			var applyVaild = null;
 
 			this.$refs.applyForm.validate((valid) => {
@@ -68,6 +69,32 @@ export default {
 				return null;
 			}
 		},
+		getSubmitForm () {
+			var applyVaild = null;
+			let formData = {};
+			this.$refs.applyForm.validate((valid) => {
+				applyVaild = valid;
+			});
+			if (applyVaild) {
+				formData = {
+					rehearsalTime: this.applyForm.rehearsalTime,
+					rehearsalSite: this.applyForm.rehearsalSite,
+					numOfHost: this.applyForm.numOfHost,
+					descOfJob: this.applyForm.descOfJob,
+				};
+				for (let key in formData){
+					if (NEEDDECODEHOSTFORM.indexOf(key) !== -1){
+						formData[key] = encodeURI(formData[key]);
+					}
+				}
+				return formData;
+			}
+			else{
+				this.$message.error("请正确输入主持人申请表");
+				return null;
+			}
+		},
+
 		// getPreviewForm () {
 		// 	var previewObj = {
 		// 		title: '主持人申请',
