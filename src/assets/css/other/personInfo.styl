@@ -1,0 +1,42 @@
+@import '../default'
+
+.person-info-box{
+	.person-info-row{
+	    font-size: 1.5em;
+	    font-weight: bold;
+	    /* padding-bottom: 20px; */
+	    margin: 10px 36px;
+	    line-height: 2;
+	    font-family: serif;
+	    font-style: italic;
+	    color: #606266;
+	    @media screen and (max-width: 540px){
+	    	font-size: 0.9em;
+	    	margin-left: 1%;
+	    }
+	    
+		.person-info-key{
+			width: 30%;
+			box-sizing: border-box;
+			float: left;
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+		.person-info-value{
+			width: 70%
+			box-sizing: border-box;
+			float: left;
+			font-size: 1.2em;
+			font-weight: bold;
+
+		}
+	}
+}
+.clearfix:after{
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	overflow: hidden;
+}

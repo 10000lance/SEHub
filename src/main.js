@@ -11,7 +11,9 @@ import SeUpload from './components/apply/SeUpload';
 import './assets/css/default.styl';
 
 //mock测试
-import Mock from './mock/mock.js';
+// import Mock from './mock/mock.js';
+
+axios.defaults.withCredentials = true;
 
 Vue.config.productionTip = false;
 

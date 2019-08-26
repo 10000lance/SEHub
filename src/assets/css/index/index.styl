@@ -6,8 +6,9 @@
 
 // index.vue
 
-$headBarHeight = 50px     // 定义HeadBar的高度
-$sideBarWidth = 250px     // 定义SideBar的宽度
+$headBarHeight = 60px     // 定义HeadBar的高度
+$sideBarWidth = 18%     // 定义SideBar的宽度
+$rightBoxWidth= 82%
 
 .index-container {
 	width: 100%;
@@ -15,30 +16,56 @@ $sideBarWidth = 250px     // 定义SideBar的宽度
 
 	.head-box {
 		width: 100%;
-		height: $headBarHeight;
+		// height: $headBarHeight;
+		padding: 0;
 	}
 
 	.main-box {
+		max-width: 1680px;
+		width: 100%;
+		
+		.menu-btn {
+			display: none;
+		}
+		
 		.left-box {
-			position: fixed;
-			top: $headBarHeight;
-			bottom: 0;
-			// width: $sideBarWidth;
+			width: $sideBarWidth;
+			overflow: hidden;
+			float: left;
+			// min-width: 180px;
 		}
 
 		.right-box {
-			position: fixed;
-			top: $headBarHeight;
-			left: $sideBarWidth;
-			right: 0;
-			bottom: 0;
-			overflow-y: scroll;
+			width: $rightBoxWidth;
+			overflow: hidden;
+			margin: auto;
+			float: left;
 
 			.index-right-box{  // 设置默认的内容边框样式
-				width 1100px;
-				padding-left 48px;
-				padding-right 48px;
+				width 92%;
+				// padding-left 48px;
+				// padding-right 48px;
 				margin 30px auto;
+			}
+		}
+		
+		@media screen and (max-width: 768px) {
+			.menu-btn {
+			    display: block;
+			    margin-top: 12px;
+			    margin-left: 12px;
+			    width: 48px;
+			    padding: 16px 0;
+			    border-radius: 4px;
+			}
+			
+			.left-box {
+				display: none;
+			}
+			
+			.right-box {
+				float: none;
+				width: 100%;
 			}
 		}
 	}
@@ -51,16 +78,4 @@ $sideBarWidth = 250px     // 定义SideBar的宽度
 .fade-enter, .fade-leave-to {
 	opacity: 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,10 +1,10 @@
 @import "../default"
 
 // 以固定宽为900px设计
-$widow_width = 900px
+$widow_width = 95%
 
-apy_form_width = 570px
-apy_matter_width = 280px
+apy_form_width = 65%
+apy_matter_width = 30%
 
 
 // Apply Home
@@ -14,10 +14,12 @@ apy_matter_width = 280px
 	display flex
 	flex-wrap: wrap
 	justify-content: space-between
+	margin: auto
 	not-select()
 	
 	each-box()
-		width 260px
+		width 28.8888888%
+		// margin: auto
 		border-box()
 		text-align: center
 		font-size 1.1em
@@ -26,7 +28,16 @@ apy_matter_width = 280px
 		padding-bottom 15px
 		color #606266
 		cursor pointer
+	
+		@media screen and (max-width: 768px)
+			width: 43.3333332%;
 
+		@media screen and (max-width: 400px)
+			width: 86.66666666%;
+			margin: auto
+			margin-bottom 35px
+	
+	
 	.each-box,
 	.each-box-ph
 		each-box()
@@ -42,12 +53,15 @@ apy_matter_width = 280px
 			background: #909399;
 			color #ffffff
 			text-shadow:4px 2px 10px #303333;
-
+		
+		
 		.each-title
 			margin-top 10px
 			line-height 40px
 			transition-duration: 200ms
-
+		
+	
+	
 	.each-box:hover
 		hover-box()
 		.each-img
@@ -55,51 +69,82 @@ apy_matter_width = 280px
 			transition-property: font-size, background-color;
 			transition-duration: 200ms
 			background: #409EFF
+		
 		.each-title
 			font-size 1.4em
 			color #409EFF
 			transition-property: font-size,color;
 			transition-duration: 200ms
-			
+		
+		
 		 
 	.each-box-ph
 		.each-img
 			background: #C0C4CC;
+		
 		.each-title
 			line-height 36px
 			font-size 1.2em
-
+		
+	
 
 
 // Apply form
 
-.apy-header{
-	not-select();
+
+.clearfix:after
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	overflow: hidden;
+
+	
+.apply-cnt
 	width: $widow_width;
+	margin: auto;
+
+.apy-header
+	not-select();
+	// width: $widow_width;
 	text-align: center;
 	font-size: 1.5rem;
 	color: #202124;
 	margin-bottom: 20px;
 	// border-box();
-}
+
 
 .apy-container
-	width $widow_width + 20px
+	width 100%
 	// margin-top 24px
+
 
 .apy-form-container
 	float left
 	width apy_form_width
+	box-sizing border-box
 	padding 30px 10px 40px 10px
 	border-box()
 	margin-right 30px
 	margin-bottom 75px
-
+	@media screen and (max-width: 960px)
+		width: 94.4444444%
+		float: none
+		margin: auto
+		margin-bottom: 30px
 
 // 注意事项的样式
 .apy-matter-container
 	float left
 	width apy_matter_width
+	box-sizing border-box
+	marign: auto
+	@media screen and (max-width: 960px)
+		width: 94.44444444%
+		float: none
+		margin: auto
+
 
 /* Button 相关 */
 apy_btn_width = 150px
@@ -107,19 +152,29 @@ btn_box_margin = (apy_form_width - apy_btn_width)/2
 
 
 .apy-btn-submit
-	margin-top 10px
-	margin-left btn_box_margin
+	width: 25%
+	margin: auto
+	margin-top 30px
+	@media screen and (max-width: 768px)
+		width: 45%
+	@media screen and (max-width: 400px)
+		width: 75%
 	border-color: $color_default
-	width apy_btn_width
+	// width apy_btn_width
 	color $color_theme
+	display: block
+
 
 .add-btn
 	margin-top 10px
 	// border-color $color_theme
-	width apy_matter_width
 	// color $color_theme
 	margin-left 0px
+	width: 100%
 	// background-color #87c23a	
+	
+
+
 /* ----  */
 
 // 预览框样式
@@ -132,38 +187,38 @@ btn_box_margin = (apy_form_width - apy_btn_width)/2
 	background-color: #fff;
 	z-index: 100
 
+
 .preview-fade-enter-active, 
-.preview-fade-leave-active {
+.preview-fade-leave-active 
 	transition: opacity 150ms linear;
-}
+
 
 .preview-fade-enter,
-.preview-fade-leave-to {
+.preview-fade-leave-to 
 	opacity: 0;
-}
+
 
 //过渡
 .slide-fade-left-enter-active,
-.slide-fade-right-enter-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+.slide-fade-right-enter-active 
+	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+
 
 .slide-fade-left-leave-active,
-.slide-fade-right-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+.slide-fade-right-leave-active 
+	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+
 
 .slide-fade-left-enter, .slide-fade-left-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: translateX(100px);
-  opacity: 0;
-}
-
-.slide-fade-right-enter {
-	opacity: 0;
-}
-
-.slide-fade-right-leave-to {
+/* .slide-fade-leave-active for below version 2.1.8 */ 
 	transform: translateX(100px);
 	opacity: 0;
-}
+
+
+.slide-fade-right-enter 
+	opacity: 0;
+
+
+.slide-fade-right-leave-to 
+	transform: translateX(100px);
+	opacity: 0;

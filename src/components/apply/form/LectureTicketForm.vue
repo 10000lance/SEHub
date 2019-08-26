@@ -1,23 +1,23 @@
 <template>
 	<div>
-		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
+		<el-form :model="applyForm" :rules="rules" ref="applyForm">
 <!-- 			<el-form-item label="活动时间" prop="actTime">
 				<el-date-picker v-model="applyForm.actTime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
  -->
-			<el-form-item label="分数类型" prop="ticketType">
+			<el-form-item label="分数类型" prop="ticketType" class="apy-item">
 				<el-input v-model="applyForm.ticketType" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="分值" prop="ticketScore">
+			<el-form-item label="分值" prop="ticketScore" class="apy-item">
 				<el-input v-model="applyForm.ticketScore" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="申请数量" prop="numOfTicket">
+			<el-form-item label="申请数量" prop="numOfTicket" class="apy-item">
 				<el-input v-model.number="applyForm.numOfTicket" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="备注">
+			<el-form-item label="备注" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -27,7 +27,7 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="上传附件">
+			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
 			</el-form-item>
 		</el-form>

@@ -15,8 +15,10 @@ export default {
 </script>
 <style lang="stylus" scoped>
 // @import '../../../assets/css/default';
+
 .apy-upload-box {
 	width: 180px;
+	display: block;
 	border: 1px dashed #ccc;
 	border-radius: 5px;
 	text-align: center;

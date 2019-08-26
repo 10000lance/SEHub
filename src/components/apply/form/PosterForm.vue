@@ -1,8 +1,8 @@
 <!-- 宣传物资申请 -->
 <template>
 	<div>
-		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="交付时间" prop="deadline">
+		<el-form :model="applyForm" :rules="rules" ref="applyForm">
+			<el-form-item label="交付时间" prop="deadline" class="apy-item">
 				<el-date-picker
 					v-model="applyForm.deadline"
 					type="date"
@@ -11,7 +11,7 @@
 				></el-date-picker>
 			</el-form-item>
 
-			<el-form-item label="宣传文字要求" prop="propagandaTextRequirement">
+			<el-form-item label="宣传文字要求" prop="propagandaTextRequirement" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -21,7 +21,7 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="海报大小" prop="posterSize">
+			<el-form-item label="海报大小" prop="posterSize" class="apy-item">
 				<el-input v-model="applyForm.posterSize" class="apy-input-normal"></el-input>
 			</el-form-item>
 
@@ -54,7 +54,7 @@
 			</el-button>
 			<div class="apy-form-dashed" style="margin-top:25px;"></div>
  -->
-			<el-form-item label="备注" prop="note">
+			<el-form-item label="备注" prop="note" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -64,7 +64,7 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="上传附件">
+			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
 			</el-form-item>
 		</el-form>

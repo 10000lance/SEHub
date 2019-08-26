@@ -1,20 +1,20 @@
 <!--主持人申请-->
 <template>
 	<div>
-		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="申请人数" prop="numOfHost">
+		<el-form :model="applyForm" :rules="rules" ref="applyForm">
+			<el-form-item label="申请人数" prop="numOfHost" class="apy-item">
 				<el-input v-model.number="applyForm.numOfHost" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="彩排时间" prop="rehearsalTime">
+			<el-form-item label="彩排时间" prop="rehearsalTime" class="apy-item">
 				<el-date-picker v-model="applyForm.rehearsalTime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
 
-			<el-form-item label="彩排地点" prop="rehearsalSite">
+			<el-form-item label="彩排地点" prop="rehearsalSite" class="apy-item">
 				<el-input v-model="applyForm.rehearsalSite" class="apy-input-normal"></el-input>
 			</el-form-item>
 			
-			<el-form-item label="工作描述">
+			<el-form-item label="工作描述" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -24,7 +24,7 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="上传附件">
+			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
 			</el-form-item>
 		</el-form>

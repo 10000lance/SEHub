@@ -1,16 +1,16 @@
 <!--秘书部物资申请-->
 <template>
 	<div>
-		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm" label-width="95px">
-			<el-form-item label="活动名称" prop="name">
+		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm">
+			<el-form-item label="活动名称" prop="name" class="apy-item">
 				<el-input v-model="baseForm.name" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="活动地点" prop="address">
+			<el-form-item label="活动地点" prop="address" class="apy-item">
 				<el-input v-model="baseForm.address" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="开始时间" prop="startTime">
+			<el-form-item label="开始时间" prop="startTime" class="apy-item">
 				<el-date-picker
 					v-model="baseForm.startTime"
 					type="datetime"
@@ -24,7 +24,7 @@
 				</el-row>-->
 			</el-form-item>
 
-			<el-form-item label="结束时间" prop="endTime">
+			<el-form-item label="结束时间" prop="endTime" class="apy-item">
 				<el-date-picker
 					v-model="baseForm.endTime"
 					type="datetime"
@@ -33,7 +33,7 @@
 				></el-date-picker>
 			</el-form-item>
 
-			<el-form-item label="活动简介" prop="description">
+			<el-form-item label="活动简介" prop="description" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -46,11 +46,11 @@
 		</el-form>
 
 		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="借用时间" prop="lendTime">
+			<el-form-item label="借用时间" prop="lendTime" class="apy-item">
 				<el-date-picker v-model="applyForm.lendTime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
 
-			<el-form-item label="归还时间" prop="backTime">
+			<el-form-item label="归还时间" prop="backTime" class="apy-item">
 				<el-date-picker v-model="applyForm.backTime" type="date" value-format="yyyy-MM-dd"></el-date-picker>
 			</el-form-item>
 
@@ -60,6 +60,7 @@
 				v-for="(need,index) in applyForm.needs"
 				:label="'物资   '+(index+1)"
 				:key="index"
+				class="apy-item"
 			>
 				<el-input v-model="need.name" class="apy-input-medium"></el-input>
 				<span>&emsp;&emsp;数量&ensp;</span>
@@ -81,7 +82,7 @@
 			</el-button>
 			<div class="apy-form-dashed" style="margin-top: 20px;"></div>
 
-			<el-form-item label="备  注">
+			<el-form-item label="备  注" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -90,7 +91,7 @@
 					class="apy-text-normal"
 				></el-input>
 			</el-form-item>
-			<el-form-item label="上传附件">
+			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
 			</el-form-item>
 		</el-form>

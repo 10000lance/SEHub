@@ -9,17 +9,17 @@
 					<div class="title-box">{{item.name}}</div>
 				</div>
 			</div>
-			<div class="line"></div>
 		</div>
 	</div>
+
 </template>
 <script>
 export default {
 	props: ['paths'],
 	data () {
 		return {
-			active: '/home'
-
+			active: '/home',
+			isCollapse: true,
 		};
 	},
 	computed: {

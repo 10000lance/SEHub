@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="活动背景" prop="background">
+		<el-form :model="applyForm" :rules="rules" ref="applyForm">
+			<el-form-item label="活动背景" prop="background" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -11,23 +11,23 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="主办单位" prop="hostUnit">
+			<el-form-item label="主办单位" prop="hostUnit" class="apy-item">
 				<el-input v-model="applyForm.hostUnit" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="承办单位" prop="organizer">
+			<el-form-item label="承办单位" prop="organizer" class="apy-item">
 				<el-input v-model="applyForm.organizer" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="面向对象" prop="objective">
+			<el-form-item label="面向对象" prop="objective" class="apy-item">
 				<el-input v-model="applyForm.objective" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label='参与人数' prop='expectedNumOfParticipants'>
+			<el-form-item label='参与人数' prop='expectedNumOfParticipants' class="apy-item">
 				<el-input v-model="applyForm.expectedNumOfParticipants" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="备注" prop="note">
+			<el-form-item label="备注" prop="note" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -37,8 +37,8 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="上传附件">
-				<se-upload></se-upload>
+			<el-form-item label="上传附件" class="apy-item">
+				<se-upload class="apy-text-normal"></se-upload>
 			</el-form-item>
 
 		</el-form>

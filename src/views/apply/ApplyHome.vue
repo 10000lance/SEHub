@@ -1,25 +1,25 @@
 <template>
-  <div>
+	<div>
 	<div class="apply-box">
-	  <div v-for="(item,idx) in applys" :key="idx" class="each-box" @click="handleClick(item)">
+		<div v-for="(item,idx) in applys" :key="idx" class="each-box" @click="handleClick(item)">
 		<div class="each-img">{{item.name}}</div>
 		<div class="each-title">{{item.name}}</div>
-	  </div>
-	  <div class="each-box-ph">
+		</div>
+		<div class="each-box-ph">
 		<div class="each-img">
-		  <i class="el-icon-more"></i>
+			<i class="el-icon-more"></i>
 		</div>
 		<div class="each-title">
-		  <i class="el-icon-more"></i>
+			<i class="el-icon-more"></i>
 		</div>
-	  </div>
+		</div>
 	</div>
-  </div>
+	</div>
 </template>
 
 <script>
 export default {
-  data () {
+	data () {
 	return {
 		applys: [
 			{
@@ -29,39 +29,39 @@ export default {
 			{
 				name: '礼仪申请',
 				path: '/apply/etiquette'
-		  	},
-		  	{
+				},
+				{
 				name: '主持人申请',
 				path: '/apply/host'
-		  	},
-		  // 	{
+				},
+			// 	{
 				// name: '新媒体申请',
 				// path: '/apply/newmedia'
-		  // 	},
-		  // 	{
+			// 	},
+			// 	{
 				// name: '记者团申请',
 				// path: '/apply/reporter'
-		  // 	},
-		  	{
+			// 	},
+				{
 				name: '宣传物资申请',
 				path: '/apply/poster'
-		  	},
-		  // 	{
+				},
+			// 	{
 				// name: '秘书物资申请',
 				// path: '/apply/material'
-		  // 	},
-		  	{
+			// 	},
+				{
 				name: '讲座票申请',
 				path: '/apply/lectureTicket'
 			}
 		]
 	};
-  },
-  methods: {
+	},
+	methods: {
 	handleClick (item) {
-	 	this.$router.push(item.path);
+		this.$router.push(item.path);
 	}
-  }
+	}
 
 };
 </script>

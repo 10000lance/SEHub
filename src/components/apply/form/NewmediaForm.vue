@@ -1,7 +1,7 @@
 <!-- 新媒体申请 -->
 <template>
 	<div>
-		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm" label-width="95px">
+		<el-form :model="baseForm" :rules="baseFormRules" ref="baseForm">
 			<el-form-item label="活动名称" prop="name">
 				<el-input v-model="baseForm.name" class="apy-input-normal"></el-input>
 			</el-form-item>

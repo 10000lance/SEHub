@@ -2,27 +2,27 @@
 
 .ndetail-cnt
 	margin: auto
-	width: 900px
+	width: 95%
 	padding-bottom: 20px
 	// background-color #eee
 	// border-box()
 
 // 表格参数
-$table_width = 750px
+$table_width = 100%
 $line_width = 1px
 $line_color = #606266
 
 table 
 	width $table_width
+	border: 1px solid #DCDFE6
 	// border-right: $line_width solid $line_color;
 	// border-bottom: $line_width solid $line_color;
-	border-box()
+	// border-box()
 td
-	border solid 1px #DCDFE6
+	// border solid 1px #DCDFE6
 	// width: 100%
 	// border-left: $line_width solid $line_color;
 	// border-top: $line_width solid $line_color;
-
 
 .ndetail-table
 	width $table_width
@@ -32,22 +32,53 @@ td
 	font-size 1.375em
 	line-height 66px
 
+@media screen and (max-width:768px)
+	.ndetail-td-label
+		font-size 0.85em
+	
+	.ndetail-td-title
+		font-size 1.1em
+		
+	.ndetail-td-value
+		font-size 0.85em
+
+
 .ndetail-td-label
-	width 120px
-	padding-top 8px
-	padding-bottom: 8px
+	width: 25%
+	padding 10px
+	padding-top 12px	
 	color #606266
 	// background-color red
 	font-weight: bold
 	// overflow hidden
 	word-wrap:break-word;
+	text-align: center
+	float: left
+	box-sizing: border-box
+	line-height 2
+	border-right: 1px solid #DCDFE6
 
 .ndetail-td-value
-	width $table_width - 120px
+	width 75%
 	text-align: left
-	padding 8px
+	padding 12px
 	padding-left 16px
 	word-wrap break-word
 	word-break break-all
 	color #303133
 	line-height 30px
+	float: left
+	box-sizing: border-box
+	border-left: solid 1px #DCDFE6
+	line-height 2
+
+.tr-bar
+	border-top solid 1px #DCDFE6
+
+.clearfix:after
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	overflow: hidden;

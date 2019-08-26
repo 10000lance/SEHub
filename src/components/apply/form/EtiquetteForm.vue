@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<el-form :model="applyForm" :rules="rules" ref="applyForm" label-width="95px">
-			<el-form-item label="申请人数" prop="numOfEtiquette">
+		<el-form :model="applyForm" :rules="rules" ref="applyForm">
+			<el-form-item label="申请人数" prop="numOfEtiquette" class="apy-item">
 				<el-input v-model.number="applyForm.numOfEtiquette" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="彩排时间" prop="rehearsalTime">
+			<el-form-item label="彩排时间" prop="rehearsalTime" class="apy-item">
 				<el-date-picker
 					v-model="applyForm.rehearsalTime"
 					type="datetime"
@@ -14,11 +14,11 @@
 				></el-date-picker>
 			</el-form-item>
 
-			<el-form-item label="彩排地点" prop="rehearsalSite">
+			<el-form-item label="彩排地点" prop="rehearsalSite" class="apy-item">
 				<el-input v-model="applyForm.rehearsalSite" class="apy-input-normal"></el-input>
 			</el-form-item>
 
-			<el-form-item label="礼仪工作" prop="etiquetteJobs">
+			<el-form-item label="礼仪工作" prop="etiquetteJobs" class="apy-item">
 				<el-checkbox-group v-model="applyForm.etiquetteJobs">
 					<el-checkbox label="颁奖">颁奖</el-checkbox>
 					<el-checkbox label="引导">引导</el-checkbox>
@@ -27,7 +27,7 @@
 				</el-checkbox-group>
 			</el-form-item>
 
-			<el-form-item label="工作描述">
+			<el-form-item label="工作描述" class="apy-item">
 				<el-input
 					type="textarea"
 					rows="5"
@@ -37,7 +37,7 @@
 				></el-input>
 			</el-form-item>
 
-			<el-form-item label="上传附件">
+			<el-form-item label="上传附件" class="apy-item">
 				<se-upload></se-upload>
 			</el-form-item>
 
@@ -112,6 +112,6 @@ export default {
 			this.applyForm = formData;
 		},
 	}
-}
+};
 </script>
 <style scoped lang="stylus" src="../../../assets/css/apply/form.styl"></style>

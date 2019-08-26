@@ -1,10 +1,20 @@
 <template>
-	<div class="index-container">
-		<div class="head-box">
+	<el-container class="index-container">
+		<el-header class="head-box">
 			<head-bar></head-bar>
-		</div>
+		</el-header>
 		
 		<div class="main-box">
+
+			<el-button type="primary" icon="el-icon-menu" class="menu-btn" @click="drawer=true"></el-button>
+			<el-drawer
+				direction="ltr"
+				:visible.sync="drawer"
+				size="50%"
+			>
+				<side-bar :paths="paths"></side-bar>
+			</el-drawer>
+
 			<div class="left-box">
 				<side-bar :paths="paths"></side-bar>
 			</div>
@@ -19,7 +29,7 @@
 				</transition>
 			</div>
 		</div>
-	</div>
+	</el-container>
 </template>
 
 <script>
@@ -28,46 +38,52 @@ import HeadBar from '../components/index/HeadBar.vue';
 
 export default {
 	components: {
-	'side-bar': SideBar,
-	'head-bar': HeadBar,
+		'side-bar': SideBar,
+		'head-bar': HeadBar,
 	},
 	data () {
 	return {
+			drawer: false,
 			paths: [
-			{ // 定义边栏的跳转
-				name: '首页',
-				path: '/home',
-				iclass: 'el-icon-date'
-			}, 
-			{
-				name: '部门中心',
-				path: '/center',
-				iclass: 'el-icon-star-off'
-			}, 
-			{
-				name: '部门通知',
-				path: '/notice',
-				iclass: 'el-icon-bell'
-			}, 
-			{
-				name: '工作申请',
-				path: '/apply',
-				iclass: 'el-icon-document'
-			}, 
-			{
-				name: '其他',
-				path: '/others',
-				iclass: 'el-icon-news'
-			}
-		]
-	};
+				{ // 定义边栏的跳转
+					name: '首页',
+					path: '/home',
+					iclass: 'el-icon-date'
+				}, 
+				{
+					name: '部门中心',
+					path: '/center',
+					iclass: 'el-icon-star-off'
+				}, 
+				{
+					name: '部门通知',
+					path: '/notice',
+					iclass: 'el-icon-bell'
+				}, 
+				{
+					name: '工作申请',
+					path: '/apply',
+					iclass: 'el-icon-document'
+				}, 
+				{
+					name: '其他',
+					path: '/others',
+					iclass: 'el-icon-news'
+				}
+			]
+		};
+	},
+	methods: {
+		toggleMenu (){
+			this.showSidebar = !this.showSidebar;
+		}
 	},
 	beforeMount () {
 	if (this.$route.path === '/') {
 		if (this.$store.state.isLogin) {
-		this.$router.push('home');
+			this.$router.push('home');
 		} else {
-		this.$router.push('login');
+			this.$router.push('index');
 		}
 	}
 	}

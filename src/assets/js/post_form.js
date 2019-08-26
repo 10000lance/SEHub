@@ -6,6 +6,7 @@ const activityForm = {
 		startTime: 'yyyy-mm-dd',
 		endTime: 'yyyy-mm-dd',
 		description: 'string',
+		location: 'string',
 	},
 
 	activitySupplementaryInfo: {

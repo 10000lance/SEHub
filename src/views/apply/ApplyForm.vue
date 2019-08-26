@@ -1,8 +1,8 @@
 <template>
 <div>
-	<div>
+	<div class="apply-cnt">
 		<div class="apy-header">{{formTitle}}</div>
-		<div class="apy-container">
+		<div class="apy-container clearfix">
 			<div class="apy-form-container">
 				<!-- 基本信息表单 -->
 				<transition name="slide-fade-right">
@@ -163,7 +163,7 @@
 		:appendToBody="true"
 		:closeOnClickModal="false"
 		:showClose="false"
-		width="75%"
+		width="90%"
 	>
 		<preview :previewData="previewData"></preview>
 

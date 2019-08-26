@@ -6,7 +6,7 @@
 			</div>
 			<div class="head-title-box">软件学院团学管理平台 管理端</div>
 		</div>
-		<div class="head-option-box">
+<!-- 		<div class="head-option-box">
 			<el-dropdown @command="handleCommand" trigger="click">
 				<div class="option-person">{{personName}}</div>
 				<el-dropdown-menu slot="dropdown">
@@ -15,7 +15,7 @@
 				</el-dropdown-menu>
 			</el-dropdown>
 		</div>
-	</div>
+ -->	</div>
 </template>
 <script>
 export default {

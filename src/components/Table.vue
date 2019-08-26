@@ -9,22 +9,13 @@
 				</tr>
 				<div v-for="(value, key) in detailData" :key="key">
 					<div v-if="keyToStr(key)">
-						<tr v-if="! (value instanceof Array)">
-							<td align="center">
-								<div class="ndetail-td-label">{{keyToStr(key)}}</div>
-							</td>
-							<td class="ndetail-td-value">{{value}}</td>
-						</tr>
-						<div v-else-if="key !== 'otherForms'">
-							<tr>
-								<td :rowspan="value.length" align="center" style="vertical-align: middle;">
-									<div class="ndetail-td-label">{{keyToStr(key)}}</div>
-								</td>
-								<td class="ndetail-td-value">{{value[0]}}</td>
-							</tr>
-							<tr v-for="subval in popValue(value)" :key="subval">
-								<td class="ndetail-td-value">{{subval}}</td>
-							</tr>
+						<div v-if="! (value instanceof Array)" class="tr-bar clearfix">
+							<div class="ndetail-td-label">{{keyToStr(key)}}</div>
+							<div class="ndetail-td-value">{{value}}</div>
+						</div>
+						<div v-else-if="key !== 'otherForms'" class="tr-bar clearfix">
+							<div class="ndetail-td-label">{{keyToStr(key)}}</div>
+							<div class="ndetail-td-value">{{value.join(';')}}</div>
 						</div>
 					</div>
 				</div>
@@ -49,8 +40,9 @@ export default {
 				t = ToFormName[type];
 			// delete(this.detailData.type);
 			return t ? t : type;
-		}
+		},
 	},
+
 	methods: {
 		keyToStr: function (key) {
 			var str = KeyToStr[key];

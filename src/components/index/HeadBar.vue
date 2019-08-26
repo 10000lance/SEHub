@@ -12,7 +12,6 @@
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item v-if="isAdmin" command="admin">管理员端</el-dropdown-item>
 					<el-dropdown-item command="person">个人信息</el-dropdown-item>
-					<el-dropdown-item command="depart">部门信息</el-dropdown-item>
 					<el-dropdown-item command="logout">退出登录</el-dropdown-item>
 				</el-dropdown-menu>
 			</el-dropdown>
@@ -41,9 +40,6 @@ export default {
 					break;
 				case 'person':
 					this.$router.push('/person');
-					break;
-				case 'depart':
-					this.$router.push('/depart');
 					break;
 				case 'logout':
 					break;
